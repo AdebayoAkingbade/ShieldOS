@@ -1,0 +1,298 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { useAppSelector } from '@/store/hooks';
+import { incidents } from '@/lib/mock-data';
+import Link from 'next/link';
+import { Search, ChevronRight, AlertCircle, Clock, CheckCircle2, Download, Plus } from 'lucide-react';
+import gsap from 'gsap';
+import { useToast } from '@/components/ui/ToastProvider';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+
+export default function IncidentsPage() {
+  const { tenant } = useAppSelector((state) => state.auth);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Local state for rendering, but we will mutate the mock array so new incidents persist across routes
+  const [localIncidents, setLocalIncidents] = useState([...incidents]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [severityFilter, setSeverityFilter] = useState('all');
+  
+  // Dialog state
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
+  const [newCategory, setNewCategory] = useState('Malware');
+  const [newSeverity, setNewSeverity] = useState('high');
+
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const rows = containerRef.current.querySelectorAll('tbody tr');
+      gsap.fromTo(rows, 
+        { y: 10, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: 'power2.out' }
+      );
+    }
+  }, [searchTerm, statusFilter, severityFilter, localIncidents.length]);
+
+  const filteredIncidents = localIncidents.filter(inc => {
+    const isTenantMatch = inc.tenantId === tenant?.id;
+    const isSearchMatch = inc.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          inc.id.toLowerCase().includes(searchTerm.toLowerCase());
+    const isStatusMatch = statusFilter === 'all' || inc.status === statusFilter;
+    const isSeverityMatch = severityFilter === 'all' || inc.severity === severityFilter;
+    
+    return isTenantMatch && isSearchMatch && isStatusMatch && isSeverityMatch;
+  });
+
+  const getSeverityStyle = (severity: string) => {
+    switch (severity) {
+      case 'high': return { bg: 'rgba(220, 38, 38, 0.1)', color: 'var(--risk-high)' };
+      case 'medium': return { bg: 'rgba(245, 158, 11, 0.1)', color: 'var(--risk-medium)' };
+      case 'low': return { bg: 'rgba(37, 99, 235, 0.1)', color: 'var(--risk-low)' };
+      default: return { bg: 'var(--bg-light)', color: 'var(--text-secondary)' };
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'open': return <AlertCircle size={16} color="var(--risk-high)" />;
+      case 'investigating': return <Clock size={16} color="var(--risk-medium)" />;
+      case 'resolved': return <CheckCircle2 size={16} color="var(--risk-low)" />;
+      default: return <CheckCircle2 size={16} color="var(--text-muted)" />;
+    }
+  };
+
+  const handleExport = () => {
+    if (filteredIncidents.length === 0) {
+      showToast('No incidents to export.', 'warning');
+      return;
+    }
+    const headers = ['ID', 'Title', 'Severity', 'Status', 'Category', 'Timestamp'];
+    const rows = filteredIncidents.map(inc => [
+      inc.id,
+      `"${inc.title}"`,
+      inc.severity,
+      inc.status,
+      inc.category,
+      inc.timestamp
+    ]);
+    const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'incidents_export.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Export successful!', 'success');
+  };
+
+  const handleCreateIncident = () => {
+    if (!newTitle) {
+      showToast('Please provide an incident title.', 'error');
+      return;
+    }
+    const newInc = {
+      id: `INC-${Math.floor(Math.random() * 10000)}`,
+      title: newTitle,
+      severity: newSeverity as any,
+      status: 'open' as any,
+      category: newCategory,
+      timestamp: new Date().toISOString(),
+      tenantId: tenant?.id || 't-1',
+      description: 'Manually created incident via dashboard portal. Initial investigation pending.'
+    };
+
+    // Mutate the mock array so other pages can find it
+    incidents.unshift(newInc);
+    setLocalIncidents([newInc, ...localIncidents]);
+    setIsDialogOpen(false);
+    setNewTitle('');
+    showToast(`Incident ${newInc.id} created successfully!`, 'success');
+  };
+
+  return (
+    <DashboardLayout title="Security Incidents">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', gap: '1rem' }}>
+        <div style={{ display: 'flex', gap: '1rem', flex: 1 }}>
+          <div style={{ position: 'relative', flex: 1, maxWidth: '400px' }}>
+            <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+            <input 
+              type="text" 
+              placeholder="Search incidents by ID or title..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.625rem 1rem 0.625rem 2.75rem',
+                borderRadius: 'var(--radius)',
+                border: '1px solid var(--border)',
+                fontSize: '0.875rem',
+                outline: 'none',
+                background: 'white'
+              }}
+            />
+          </div>
+          <select 
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', fontSize: '0.875rem', background: 'white', outline: 'none' }}
+          >
+            <option value="all">All Status</option>
+            <option value="open">Open</option>
+            <option value="investigating">Investigating</option>
+            <option value="resolved">Resolved</option>
+            <option value="closed">Closed</option>
+          </select>
+          <select 
+            value={severityFilter}
+            onChange={(e) => setSeverityFilter(e.target.value)}
+            style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', fontSize: '0.875rem', background: 'white', outline: 'none' }}
+          >
+            <option value="all">All Severity</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <button onClick={handleExport} className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Download size={18} />
+            <span>Export</span>
+          </button>
+          <button onClick={() => setIsDialogOpen(true)} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Plus size={18} />
+            <span>Create Incident</span>
+          </button>
+        </div>
+      </div>
+
+      <div ref={containerRef} className="card" style={{ padding: 0, overflow: 'hidden', border: '1px solid var(--border)' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+          <thead style={{ background: 'var(--bg-light)', borderBottom: '1px solid var(--border)' }}>
+            <tr>
+              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ID & Title</th>
+              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Severity</th>
+              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</th>
+              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Category</th>
+              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Timestamp</th>
+              <th style={{ padding: '1.25rem 1rem' }}></th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredIncidents.length > 0 ? (
+              filteredIncidents.map((inc) => (
+                <tr key={inc.id} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-light)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                  <td style={{ padding: '1.25rem 1rem' }}>
+                    <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.25rem' }}>{inc.id}</p>
+                    <p style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-primary)' }}>{inc.title}</p>
+                  </td>
+                  <td style={{ padding: '1.25rem 1rem' }}>
+                    <span style={{ 
+                      padding: '0.375rem 0.75rem', 
+                      borderRadius: '999px', 
+                      fontSize: '0.7rem', 
+                      fontWeight: 800,
+                      letterSpacing: '0.02em',
+                      background: getSeverityStyle(inc.severity).bg,
+                      color: getSeverityStyle(inc.severity).color
+                    }}>
+                      {inc.severity.toUpperCase()}
+                    </span>
+                  </td>
+                  <td style={{ padding: '1.25rem 1rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                      {getStatusIcon(inc.status)}
+                      {inc.status.charAt(0).toUpperCase() + inc.status.slice(1)}
+                    </div>
+                  </td>
+                  <td style={{ padding: '1.25rem 1rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>{inc.category}</td>
+                  <td style={{ padding: '1.25rem 1rem', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+                    {new Date(inc.timestamp).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                  </td>
+                  <td style={{ padding: '1.25rem 1rem', textAlign: 'right' }}>
+                    <Link href={`/incidents/${inc.id}`} style={{ color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', padding: '0.5rem', borderRadius: '50%', transition: 'all 0.2s' }} onMouseEnter={(e)=>e.currentTarget.style.color = 'var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color = 'var(--text-muted)'}>
+                      <ChevronRight size={20} />
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6} style={{ padding: '6rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                  <AlertCircle size={48} style={{ marginBottom: '1rem', opacity: 0.2 }} />
+                  <p style={{ fontSize: '1rem', fontWeight: 500 }}>No incidents found matching your criteria.</p>
+                  <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Try adjusting your filters or search terms.</p>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* CREATE INCIDENT DIALOG */}
+      <Dialog 
+        open={isDialogOpen} 
+        onClose={() => setIsDialogOpen(false)}
+        PaperProps={{
+          style: {
+            background: 'var(--bg-dark)',
+            color: 'white',
+            border: '1px solid var(--border)',
+            fontFamily: 'var(--font-sans)',
+            minWidth: '400px'
+          }
+        }}
+      >
+        <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Create New Incident</DialogTitle>
+        <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Incident Title</label>
+            <input 
+              type="text"
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              placeholder="E.g., Suspicious Login Detected"
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+            />
+          </div>
+          <div>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Category</label>
+            <select 
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+            >
+              <option value="Malware">Malware</option>
+              <option value="Network">Network</option>
+              <option value="Authentication">Authentication</option>
+              <option value="Data Leak">Data Leak</option>
+            </select>
+          </div>
+          <div>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Severity</label>
+            <select 
+              value={newSeverity}
+              onChange={(e) => setNewSeverity(e.target.value)}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+            >
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+        </DialogContent>
+        <DialogActions style={{ borderTop: '1px solid var(--border)', padding: '1rem' }}>
+          <button onClick={() => setIsDialogOpen(false)} className="btn btn-outline">Cancel</button>
+          <button onClick={handleCreateIncident} className="btn btn-primary">Create</button>
+        </DialogActions>
+      </Dialog>
+    </DashboardLayout>
+  );
+}
