@@ -84,6 +84,16 @@ button {
   box-shadow: var(--shadow-sm);
 }
 
+.login-hero-pane {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .login-hero-pane {
+    display: block;
+  }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

@@ -13,7 +13,7 @@ export function DashboardLayout({
   children: React.ReactNode;
   title: string;
 }) {
-  const { isAuthenticated, isLoading } = useAppSelector((state) =]> state.auth);
+  const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
   const router = useRouter();
 
   useEffect(() => {

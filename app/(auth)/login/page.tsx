@@ -95,14 +95,13 @@ export default function LoginPage() {
       overflow: 'hidden'
     }}>
       {/* LEFT PANE - Cyber Art */}
-      <div style={{
-        flex: '1',
-        position: 'relative',
-        display: 'none',
-        '@media (min-width: 768px)': {
-          display: 'block'
-        }
-      }}>
+      <div
+        className="login-hero-pane"
+        style={{
+          flex: '1',
+          position: 'relative',
+        }}
+      >
         {/* Logo at top left */}
         <div style={{ position: 'absolute', top: '3rem', left: '3rem', zIndex: 10 }}>
           <Link href="/" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', display: 'flex', alignItems: 'center', gap: '0.5rem', letterSpacing: '0.05em' }}>
