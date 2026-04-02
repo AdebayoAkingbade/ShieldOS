@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 import { useAppSelector } from '@/store/hooks';
@@ -15,6 +16,7 @@ export function DashboardLayout({
 }) {
   const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
   const router = useRouter();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -38,10 +40,26 @@ export function DashboardLayout({
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg-light)' }}>
-      <Sidebar />
-      <Header title={title} />
-      <main style={{ marginLeft: '260px', padding: '1rem' }}>
+    <div className="layout-shell" style={{ minHeight: '100vh', background: 'var(--bg-light)' }}>
+      <Sidebar open={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+
+      {isSidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.45)',
+            backdropFilter: 'blur(2px)',
+            zIndex: 50
+          }}
+        />
+      )}
+
+      <Header title={title} onToggleSidebar={() => setIsSidebarOpen((v) => !v)} />
+
+      <main className="main-content" style={{ marginLeft: '260px', padding: '1rem' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           {children}
         </div>

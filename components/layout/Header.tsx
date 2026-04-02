@@ -3,13 +3,18 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { switchTenant } from '@/store/authSlice';
 import { tenants } from '@/lib/mock-data';
-import { Bell, Search, LogOut } from 'lucide-react';
+import { Bell, Search, LogOut, Menu } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { logout } from '@/store/authSlice';
 import { Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import { useToast } from '@/components/ui/ToastProvider';
 
-export function Header({ title }: { title: string }) {
+type HeaderProps = {
+  title: string;
+  onToggleSidebar: () => void;
+};
+
+export function Header({ title, onToggleSidebar }: HeaderProps) {
   const { tenant } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -30,21 +35,46 @@ export function Header({ title }: { title: string }) {
   };
 
   return (
-    <header style={{
-      height: '64px',
-      borderBottom: '1px solid var(--border)',
-      background: 'var(--bg-card)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 2rem',
-      position: 'sticky',
-      top: 0,
-      zIndex: 50,
-      width: 'calc(100% - 260px)',
-      marginLeft: '260px'
-    }}>
-      <h3 style={{ fontSize: '1.25rem', fontWeight: 600 }}>{title}</h3>
+    <header
+      className="header-bar"
+      style={{
+        height: '64px',
+        borderBottom: '1px solid var(--border)',
+        background: 'var(--bg-card)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 2rem',
+        position: 'sticky',
+        top: 0,
+        zIndex: 55,
+        width: 'calc(100% - 260px)',
+        marginLeft: '260px',
+        gap: '1rem',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <button
+          aria-label="Open navigation"
+          onClick={onToggleSidebar}
+          className="mobile-menu-button"
+          style={{
+            display: 'none',
+            background: 'transparent',
+            border: '1px solid var(--border)',
+            color: 'var(--text-secondary)',
+            width: '36px',
+            height: '36px',
+            borderRadius: '8px',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Menu size={18} />
+        </button>
+
+        <h3 style={{ fontSize: '1.25rem', fontWeight: 600, margin: 0 }}>{title}</h3>
+      </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
         

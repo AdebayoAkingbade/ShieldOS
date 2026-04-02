@@ -94,6 +94,64 @@ button {
   }
 }
 
+.layout-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  transform: translateX(0);
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
+.header-bar {
+  transition: margin-left 0.25s ease, width 0.25s ease;
+}
+
+.mobile-menu-button {
+  display: none;
+}
+
+.main-content {
+  transition: margin-left 0.25s ease;
+}
+
+@media (max-width: 960px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-close {
+    display: inline-flex !important;
+  }
+
+  .sidebar-overlay {
+    display: block;
+  }
+
+  .header-bar {
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding: 0 1rem !important;
+  }
+
+  .mobile-menu-button {
+    display: inline-flex !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 1rem !important;
+  }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
