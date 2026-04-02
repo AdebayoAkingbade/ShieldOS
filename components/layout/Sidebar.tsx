@@ -69,7 +69,7 @@ export function Sidebar({ open, isMobile, onClose }: SidebarProps) {
       >
         <div className="sidebar-brand">
           <img src="/logo.svg" alt="Ostec Logo" style={{ height: '32px' }} className="sidebar-brand-mark-img" />
-          <h2
+          {/* <h2
             className="sidebar-brand-text"
             style={{
               fontSize: '1.25rem',
@@ -79,7 +79,7 @@ export function Sidebar({ open, isMobile, onClose }: SidebarProps) {
             }}
           >
             Ostec
-          </h2>
+          </h2> */}
         </div>
         <button
           aria-label="Close navigation"
