@@ -68,7 +68,7 @@ export function Sidebar({ open, isMobile, onClose }: SidebarProps) {
         }}
       >
         <div className="sidebar-brand">
-          <div className="sidebar-brand-mark">S</div>
+          <img src="/logo.svg" alt="Ostec Logo" style={{ height: '32px' }} className="sidebar-brand-mark-img" />
           <h2
             className="sidebar-brand-text"
             style={{
@@ -78,7 +78,7 @@ export function Sidebar({ open, isMobile, onClose }: SidebarProps) {
               margin: 0,
             }}
           >
-            ShieldOS
+            Ostec
           </h2>
         </div>
         <button

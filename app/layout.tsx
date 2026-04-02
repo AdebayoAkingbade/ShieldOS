@@ -3,7 +3,7 @@ import './globals.css';
 import { Providers } from '@/components/Providers';
 
 export const metadata: Metadata = {
-  title: 'ShieldOS | Unified Cybersecurity Platform',
+  title: 'Ostec | Unified Cybersecurity Platform',
   description: 'Enterprise cybersecurity intelligence platform for unified visibility and response.',
 };
 

@@ -112,7 +112,7 @@ export default function LandingPage() {
         borderBottom: '1px solid rgba(255,255,255,0.05)'
       }}>
         <div style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <span style={{ color: '#11D91A' }}>//</span> ShieldOS
+          <img src="/logo.svg" alt="Ostec Logo" style={{ height: '32px' }} />
         </div>
         <nav style={{ display: 'flex', gap: '2rem', fontSize: '0.875rem', fontWeight: 600 }}>
           <Link href="#" style={{ color: 'white' }}>HOME</Link>

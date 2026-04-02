@@ -429,3 +429,44 @@ button {
 .font-mono {
   font-family: var(--font-mono);
 }
+
+/* Responsiveness Helpers */
+.responsive-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-min-width {
+  min-width: 800px;
+}
+
+@media (max-width: 768px) {
+  .grid-responsive-dashboard {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .grid-responsive-metrics {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .hide-on-mobile {
+    display: none !important;
+  }
+  
+  .mobile-stack {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  
+  .main-content {
+    padding: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-responsive-metrics {
+    grid-template-columns: 1fr !important;
+  }
+}
+

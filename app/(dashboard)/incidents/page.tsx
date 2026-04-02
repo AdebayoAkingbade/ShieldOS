@@ -8,17 +8,22 @@ import Link from 'next/link';
 import { Search, ChevronRight, AlertCircle, Clock, CheckCircle2, Download, Plus } from 'lucide-react';
 import gsap from 'gsap';
 import { useToast } from '@/components/ui/ToastProvider';
-import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Pagination } from '@/components/ui/Pagination';
 
 export default function IncidentsPage() {
   const { tenant } = useAppSelector((state) => state.auth);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Local state for rendering, but we will mutate the mock array so new incidents persist across routes
+  // Local state for rendering
   const [localIncidents, setLocalIncidents] = useState([...incidents]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [severityFilter, setSeverityFilter] = useState('all');
+  
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
   
   // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -36,10 +41,10 @@ export default function IncidentsPage() {
         { y: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: 'power2.out' }
       );
     }
-  }, [searchTerm, statusFilter, severityFilter, localIncidents.length]);
+  }, [searchTerm, statusFilter, severityFilter, currentPage, localIncidents.length]);
 
   const filteredIncidents = localIncidents.filter(inc => {
-    const isTenantMatch = inc.tenantId === tenant?.id;
+    const isTenantMatch = tenant ? inc.tenantId === tenant.id : true;
     const isSearchMatch = inc.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           inc.id.toLowerCase().includes(searchTerm.toLowerCase());
     const isStatusMatch = statusFilter === 'all' || inc.status === statusFilter;
@@ -48,11 +53,18 @@ export default function IncidentsPage() {
     return isTenantMatch && isSearchMatch && isStatusMatch && isSeverityMatch;
   });
 
+  // Paginated View
+  const paginatedIncidents = filteredIncidents.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  const totalPages = Math.ceil(filteredIncidents.length / itemsPerPage);
+
   const getSeverityStyle = (severity: string) => {
     switch (severity) {
-      case 'high': return { bg: 'rgba(220, 38, 38, 0.1)', color: 'var(--risk-high)' };
+      case 'high': return { bg: 'rgba(239, 68, 68, 0.1)', color: 'var(--risk-high)' };
       case 'medium': return { bg: 'rgba(245, 158, 11, 0.1)', color: 'var(--risk-medium)' };
-      case 'low': return { bg: 'rgba(37, 99, 235, 0.1)', color: 'var(--risk-low)' };
+      case 'low': return { bg: 'rgba(16, 185, 129, 0.1)', color: 'var(--risk-low)' };
       default: return { bg: 'var(--bg-light)', color: 'var(--text-secondary)' };
     }
   };
@@ -89,7 +101,6 @@ export default function IncidentsPage() {
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
     showToast('Export successful!', 'success');
   };
 
@@ -106,10 +117,9 @@ export default function IncidentsPage() {
       category: newCategory,
       timestamp: new Date().toISOString(),
       tenantId: tenant?.id || 't-1',
-      description: 'Manually created incident via dashboard portal. Initial investigation pending.'
+      description: 'Manually created incident via dashboard portal.'
     };
 
-    // Mutate the mock array so other pages can find it
     incidents.unshift(newInc);
     setLocalIncidents([newInc, ...localIncidents]);
     setIsDialogOpen(false);
@@ -119,15 +129,15 @@ export default function IncidentsPage() {
 
   return (
     <DashboardLayout title="Security Incidents">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', gap: '1rem' }}>
-        <div style={{ display: 'flex', gap: '1rem', flex: 1 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', gap: '1rem' }} className="mobile-stack">
+        <div style={{ display: 'flex', gap: '1rem', flex: 1 }} className="mobile-stack">
           <div style={{ position: 'relative', flex: 1, maxWidth: '400px' }}>
             <Search size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
             <input 
               type="text" 
-              placeholder="Search incidents by ID or title..."
+              placeholder="Search incidents..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
               style={{
                 width: '100%',
                 padding: '0.625rem 1rem 0.625rem 2.75rem',
@@ -135,36 +145,55 @@ export default function IncidentsPage() {
                 border: '1px solid var(--border)',
                 fontSize: '0.875rem',
                 outline: 'none',
-                background: 'white'
+                background: 'var(--bg-card)',
+                color: 'var(--text-primary)'
               }}
             />
           </div>
-          <select 
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', fontSize: '0.875rem', background: 'white', outline: 'none' }}
-          >
-            <option value="all">All Status</option>
-            <option value="open">Open</option>
-            <option value="investigating">Investigating</option>
-            <option value="resolved">Resolved</option>
-            <option value="closed">Closed</option>
-          </select>
-          <select 
-            value={severityFilter}
-            onChange={(e) => setSeverityFilter(e.target.value)}
-            style={{ padding: '0.625rem 1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', fontSize: '0.875rem', background: 'white', outline: 'none' }}
-          >
-            <option value="all">All Severity</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-          </select>
+          
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <Select 
+              value={statusFilter}
+              onChange={(e) => { setStatusFilter(e.target.value as string); setCurrentPage(1); }}
+              size="small"
+              sx={{ 
+                minWidth: 140, 
+                background: 'var(--bg-card)', 
+                color: 'var(--text-primary)',
+                fontSize: '0.875rem',
+                '.MuiOutlinedInput-notchedOutline': { borderColor: 'var(--border)' }
+              }}
+            >
+              <MenuItem value="all">All Status</MenuItem>
+              <MenuItem value="open">Open</MenuItem>
+              <MenuItem value="investigating">Investigating</MenuItem>
+              <MenuItem value="resolved">Resolved</MenuItem>
+              <MenuItem value="closed">Closed</MenuItem>
+            </Select>
+
+            <Select 
+              value={severityFilter}
+              onChange={(e) => { setSeverityFilter(e.target.value as string); setCurrentPage(1); }}
+              size="small"
+              sx={{ 
+                minWidth: 140, 
+                background: 'var(--bg-card)', 
+                color: 'var(--text-primary)',
+                fontSize: '0.875rem',
+                '.MuiOutlinedInput-notchedOutline': { borderColor: 'var(--border)' }
+              }}
+            >
+              <MenuItem value="all">All Severity</MenuItem>
+              <MenuItem value="high">High</MenuItem>
+              <MenuItem value="medium">Medium</MenuItem>
+              <MenuItem value="low">Low</MenuItem>
+            </Select>
+          </div>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
           <button onClick={handleExport} className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Download size={18} />
-            <span>Export</span>
+            <span className="hide-on-mobile">Export</span>
           </button>
           <button onClick={() => setIsDialogOpen(true)} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <Plus size={18} />
@@ -174,83 +203,72 @@ export default function IncidentsPage() {
       </div>
 
       <div ref={containerRef} className="card" style={{ padding: 0, overflow: 'hidden', border: '1px solid var(--border)' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-          <thead style={{ background: 'var(--bg-light)', borderBottom: '1px solid var(--border)' }}>
-            <tr>
-              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ID & Title</th>
-              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Severity</th>
-              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</th>
-              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Category</th>
-              <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Timestamp</th>
-              <th style={{ padding: '1.25rem 1rem' }}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredIncidents.length > 0 ? (
-              filteredIncidents.map((inc) => (
-                <tr key={inc.id} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-light)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
-                  <td style={{ padding: '1.25rem 1rem' }}>
-                    <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.25rem' }}>{inc.id}</p>
-                    <p style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-primary)' }}>{inc.title}</p>
-                  </td>
-                  <td style={{ padding: '1.25rem 1rem' }}>
-                    <span style={{ 
-                      padding: '0.375rem 0.75rem', 
-                      borderRadius: '999px', 
-                      fontSize: '0.7rem', 
-                      fontWeight: 800,
-                      letterSpacing: '0.02em',
-                      background: getSeverityStyle(inc.severity).bg,
-                      color: getSeverityStyle(inc.severity).color
-                    }}>
-                      {inc.severity.toUpperCase()}
-                    </span>
-                  </td>
-                  <td style={{ padding: '1.25rem 1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
-                      {getStatusIcon(inc.status)}
-                      {inc.status.charAt(0).toUpperCase() + inc.status.slice(1)}
-                    </div>
-                  </td>
-                  <td style={{ padding: '1.25rem 1rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>{inc.category}</td>
-                  <td style={{ padding: '1.25rem 1rem', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                    {new Date(inc.timestamp).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                  </td>
-                  <td style={{ padding: '1.25rem 1rem', textAlign: 'right' }}>
-                    <Link href={`/incidents/${inc.id}`} style={{ color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', padding: '0.5rem', borderRadius: '50%', transition: 'all 0.2s' }} onMouseEnter={(e)=>e.currentTarget.style.color = 'var(--primary)'} onMouseLeave={(e)=>e.currentTarget.style.color = 'var(--text-muted)'}>
-                      <ChevronRight size={20} />
-                    </Link>
+        <div className="responsive-table-container">
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }} className="table-min-width">
+            <thead style={{ background: 'var(--bg-light)', borderBottom: '1px solid var(--border)' }}>
+              <tr>
+                <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>ID & Title</th>
+                <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Severity</th>
+                <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Status</th>
+                <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Category</th>
+                <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Timestamp</th>
+                <th style={{ padding: '1.25rem 1rem' }}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedIncidents.length > 0 ? (
+                paginatedIncidents.map((inc) => (
+                  <tr key={inc.id} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.2s' }}>
+                    <td style={{ padding: '1.25rem 1rem' }}>
+                      <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '0.25rem' }}>{inc.id}</p>
+                      <p style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-primary)' }}>{inc.title}</p>
+                    </td>
+                    <td style={{ padding: '1.25rem 1rem' }}>
+                      <span style={{ 
+                        padding: '0.375rem 0.75rem', 
+                        borderRadius: '999px', 
+                        fontSize: '0.7rem', 
+                        fontWeight: 800,
+                        background: getSeverityStyle(inc.severity).bg,
+                        color: getSeverityStyle(inc.severity).color
+                      }}>
+                        {inc.severity.toUpperCase()}
+                      </span>
+                    </td>
+                    <td style={{ padding: '1.25rem 1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                        {getStatusIcon(inc.status)}
+                        {inc.status.charAt(0).toUpperCase() + inc.status.slice(1)}
+                      </div>
+                    </td>
+                    <td style={{ padding: '1.25rem 1rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>{inc.category}</td>
+                    <td style={{ padding: '1.25rem 1rem', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+                      {new Date(inc.timestamp).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                    </td>
+                    <td style={{ padding: '1.25rem 1rem', textAlign: 'right' }}>
+                      <Link href={`/incidents/${inc.id}`} style={{ color: 'var(--text-muted)' }}>
+                        <ChevronRight size={20} />
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={6} style={{ padding: '6rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                    <AlertCircle size={48} style={{ marginBottom: '1rem', opacity: 0.2 }} />
+                    <p style={{ fontSize: '1rem', fontWeight: 500 }}>No incidents found.</p>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={6} style={{ padding: '6rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                  <AlertCircle size={48} style={{ marginBottom: '1rem', opacity: 0.2 }} />
-                  <p style={{ fontSize: '1rem', fontWeight: 500 }}>No incidents found matching your criteria.</p>
-                  <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Try adjusting your filters or search terms.</p>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
       </div>
 
       {/* CREATE INCIDENT DIALOG */}
-      <Dialog 
-        open={isDialogOpen} 
-        onClose={() => setIsDialogOpen(false)}
-        PaperProps={{
-          style: {
-            background: 'var(--bg-dark)',
-            color: 'var(--text-primary)',
-            border: '1px solid var(--border)',
-            fontFamily: 'var(--font-sans)',
-            minWidth: '400px'
-          }
-        }}
-      >
-        <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Create New Incident</DialogTitle>
+      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} PaperProps={{ style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', minWidth: '400px' } }}>
+        <DialogTitle style={{ borderBottom: '1px solid var(--border)' }}>Create New Incident</DialogTitle>
         <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Incident Title</label>
@@ -258,34 +276,35 @@ export default function IncidentsPage() {
               type="text"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
-              placeholder="E.g., Suspicious Login Detected"
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)' }}
             />
           </div>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Category</label>
-            <select 
-              value={newCategory}
-              onChange={(e) => setNewCategory(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
+            <Select 
+              value={newCategory} 
+              onChange={(e) => setNewCategory(e.target.value as string)}
+              fullWidth
+              sx={{ background: 'var(--bg-card)', color: 'var(--text-primary)', '.MuiOutlinedInput-notchedOutline': { borderColor: 'var(--border)' } }}
             >
-              <option value="Malware">Malware</option>
-              <option value="Network">Network</option>
-              <option value="Authentication">Authentication</option>
-              <option value="Data Leak">Data Leak</option>
-            </select>
+              <MenuItem value="Malware">Malware</MenuItem>
+              <MenuItem value="Network">Network</MenuItem>
+              <MenuItem value="Authentication">Authentication</MenuItem>
+              <MenuItem value="Data Leak">Data Leak</MenuItem>
+            </Select>
           </div>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Severity</label>
-            <select 
-              value={newSeverity}
-              onChange={(e) => setNewSeverity(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
+            <Select 
+              value={newSeverity} 
+              onChange={(e) => setNewSeverity(e.target.value as string)}
+              fullWidth
+              sx={{ background: 'var(--bg-card)', color: 'var(--text-primary)', '.MuiOutlinedInput-notchedOutline': { borderColor: 'var(--border)' } }}
             >
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
+              <MenuItem value="high">High</MenuItem>
+              <MenuItem value="medium">Medium</MenuItem>
+              <MenuItem value="low">Low</MenuItem>
+            </Select>
           </div>
         </DialogContent>
         <DialogActions style={{ borderTop: '1px solid var(--border)', padding: '1rem' }}>

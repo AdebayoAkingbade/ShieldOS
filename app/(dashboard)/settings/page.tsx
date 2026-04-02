@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Shield, Bell, Key, Globe, Layout, ChevronRight, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useToast } from '@/components/ui/ToastProvider';
-import { Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Select, MenuItem } from '@mui/material';
 
 const settingSections = [
   { name: 'Organization Profile', icon: Globe, description: 'Manage your company identity and branding settings.' },
@@ -24,9 +24,9 @@ export default function SettingsPage() {
   const [isConfirmSaveOpen, setIsConfirmSaveOpen] = useState(false);
   const [isDiscardOpen, setIsDiscardOpen] = useState(false);
 
-  // Form states mapping (dummy states for demonstration)
+  // Form states mapping
   const [localFormData, setLocalFormData] = useState({
-    orgName: 'ShieldOS Tenant',
+    orgName: 'Ostec Tenant',
     threatLevel: 'Strict',
     apiRateLimit: '5000'
   });
@@ -56,7 +56,7 @@ export default function SettingsPage() {
   };
 
   const executeSave = () => {
-    showToast(`Successfully saved configurations for ${pendingChanges.length} modules!`, 'success');
+    showToast(`Saved configurations for ${pendingChanges.length} modules!`, 'success');
     setPendingChanges([]);
     setIsConfirmSaveOpen(false);
   };
@@ -64,16 +64,16 @@ export default function SettingsPage() {
   const executeDiscard = () => {
     setPendingChanges([]);
     setIsDiscardOpen(false);
-    showToast('All unsaved changes have been discarded.', 'error');
+    showToast('Changes discarded.', 'error');
   };
 
   return (
     <DashboardLayout title="Platform Settings">
       <div style={{ maxWidth: '800px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }} className="mobile-stack">
           <div>
              <h3 style={{ fontSize: '1rem', fontWeight: 700 }}>General Preferences</h3>
-             <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Configure your instance of ShieldOS.</p>
+             <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>Configure your instance of Ostec.</p>
           </div>
           {pendingChanges.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--risk-medium)', fontSize: '0.875rem', fontWeight: 600 }}>
@@ -99,8 +99,7 @@ export default function SettingsPage() {
                   transition: 'background 0.2s',
                   position: 'relative'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-light)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                className="setting-row"
               >
                 <div style={{ width: '40px', height: '40px', borderRadius: 'var(--radius)', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <section.icon size={20} />
@@ -125,7 +124,7 @@ export default function SettingsPage() {
             className="btn btn-outline"
             onClick={() => pendingChanges.length > 0 ? setIsDiscardOpen(true) : showToast('Nothing to discard.', 'info')}
           >
-            Discard Changes
+            Discard
           </button>
           <button 
             className="btn btn-primary"
@@ -137,14 +136,8 @@ export default function SettingsPage() {
       </div>
 
       {/* SECTION SETTINGS DIALOG */}
-      <Dialog 
-        open={Boolean(activeDialog)} 
-        onClose={handleSectionClose}
-        PaperProps={{
-          style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' }
-        }}
-      >
-        <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>{activeDialog?.name}</DialogTitle>
+      <Dialog open={Boolean(activeDialog)} onClose={handleSectionClose} PaperProps={{ style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', minWidth: '400px' } }}>
+        <DialogTitle style={{ borderBottom: '1px solid var(--border)' }}>{activeDialog?.name}</DialogTitle>
         <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {activeDialog?.name === 'Organization Profile' && (
             <div>
@@ -155,42 +148,41 @@ export default function SettingsPage() {
           {activeDialog?.name === 'Security Policy' && (
             <div>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Threat Threshold</label>
-              <select value={localFormData.threatLevel} onChange={(e) => setLocalFormData({...localFormData, threatLevel: e.target.value})} style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}>
-                <option value="Strict">Strict (Block all anomalies)</option>
-                <option value="Moderate">Moderate (Review required for medium risk)</option>
-                <option value="Lenient">Lenient (Log only)</option>
-              </select>
+              <Select 
+                value={localFormData.threatLevel} 
+                onChange={(e) => setLocalFormData({...localFormData, threatLevel: e.target.value as string})}
+                fullWidth
+                sx={{ background: 'var(--bg-card)', color: 'var(--text-primary)', '.MuiOutlinedInput-notchedOutline': { borderColor: 'var(--border)' } }}
+              >
+                <MenuItem value="Strict">Strict (Block anomalies)</MenuItem>
+                <MenuItem value="Moderate">Moderate (Review required)</MenuItem>
+                <MenuItem value="Lenient">Lenient (Log only)</MenuItem>
+              </Select>
             </div>
           )}
           {activeDialog?.name === 'API Management' && (
             <div>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Global Rate Limit (requests/min)</label>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Global Rate Limit</label>
               <input value={localFormData.apiRateLimit} onChange={(e) => setLocalFormData({...localFormData, apiRateLimit: e.target.value})} type="number" style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }} />
             </div>
           )}
           {activeDialog?.name === 'Notifications' && (
             <div style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-               Alert routing matrix is currently locked by system administrator.
+               Alert routing matrix is currently locked.
             </div>
           )}
         </DialogContent>
         <DialogActions style={{ borderTop: '1px solid var(--border)', padding: '1rem' }}>
           <button onClick={handleSectionClose} className="btn btn-outline">Close</button>
-          <button onClick={handleSectionSave} className="btn btn-primary">Apply Locally</button>
+          <button onClick={handleSectionSave} className="btn btn-primary">Apply</button>
         </DialogActions>
       </Dialog>
 
       {/* CONFIRM SAVE DIALOG */}
-      <Dialog 
-        open={isConfirmSaveOpen} 
-        onClose={() => setIsConfirmSaveOpen(false)}
-        PaperProps={{
-          style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' }
-        }}
-      >
-        <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Confirm Platform Sync</DialogTitle>
+      <Dialog open={isConfirmSaveOpen} onClose={() => setIsConfirmSaveOpen(false)} PaperProps={{ style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', minWidth: '400px' } }}>
+        <DialogTitle style={{ borderBottom: '1px solid var(--border)' }}>Confirm Sync</DialogTitle>
         <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>You are about to commit breaking configuration changes to the following modules:</p>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Commit changes to the following modules:</p>
           <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
              {pendingChanges.map(change => (
                <div key={change} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--text-primary)' }}>
@@ -202,28 +194,21 @@ export default function SettingsPage() {
         </DialogContent>
         <DialogActions style={{ borderTop: '1px solid var(--border)', padding: '1rem' }}>
           <button onClick={() => setIsConfirmSaveOpen(false)} className="btn btn-outline">Cancel</button>
-          <button onClick={executeSave} className="btn btn-primary" style={{ background: 'var(--primary)', color: 'white' }}>Confirm Integration</button>
+          <button onClick={executeSave} className="btn btn-primary">Confirm</button>
         </DialogActions>
       </Dialog>
 
       {/* DISCARD DIALOG */}
-      <Dialog 
-        open={isDiscardOpen} 
-        onClose={() => setIsDiscardOpen(false)}
-        PaperProps={{
-          style: { background: 'var(--bg-dark)', color: 'white', border: '1px solid var(--risk-high)', fontFamily: 'var(--font-sans)', minWidth: '400px' }
-        }}
-      >
-        <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600, color: 'var(--risk-high)' }}>Discard Changes</DialogTitle>
-        <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-primary)' }}>Are you sure you want to discard your local configuration edits? This action guarantees all modified buffers will be wiped.</p>
+      <Dialog open={isDiscardOpen} onClose={() => setIsDiscardOpen(false)} PaperProps={{ style: { background: 'var(--bg-dark)', color: 'white', border: '1px solid var(--risk-high)', minWidth: '400px' } }}>
+        <DialogTitle style={{ borderBottom: '1px solid var(--border)', color: 'var(--risk-high)' }}>Discard Changes</DialogTitle>
+        <DialogContent style={{ paddingTop: '1.5rem' }}>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-primary)' }}>Are you sure you want to discard your edits?</p>
         </DialogContent>
         <DialogActions style={{ borderTop: '1px solid var(--border)', padding: '1rem' }}>
           <button onClick={() => setIsDiscardOpen(false)} className="btn btn-outline">Go Back</button>
-          <button onClick={executeDiscard} className="btn" style={{ background: 'var(--risk-high)', color: 'white' }}>Force Discard</button>
+          <button onClick={executeDiscard} className="btn" style={{ background: 'var(--risk-high)', color: 'white' }}>Discard</button>
         </DialogActions>
       </Dialog>
-
     </DashboardLayout>
   );
 }

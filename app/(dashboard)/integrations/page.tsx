@@ -5,6 +5,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Zap, Plus, MoreVertical, Link as LinkIcon } from 'lucide-react';
 import { useToast } from '@/components/ui/ToastProvider';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Menu, MenuItem } from '@mui/material';
+import { Pagination } from '@/components/ui/Pagination';
 
 const defaultIntegrations = [
   { name: 'CrowdStrike Falcon', provider: 'CrowdStrike', status: 'connected', type: 'EDR' },
@@ -28,20 +29,30 @@ export default function IntegrationsPage() {
 
   const [managedIntegration, setManagedIntegration] = useState<any>(null);
   
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
+  
+  // Paginated View
+  const paginatedIntegrations = localIntegrations.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  const totalPages = Math.ceil(localIntegrations.length / itemsPerPage);
+
   // Menu anchors
   const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedIntegration, setSelectedIntegration] = useState<any>(null);
 
   const handleConnect = (tool: any) => {
-    // Check if already in the list
     if (localIntegrations.find(i => i.name === tool.name)) {
-      showToast(`${tool.name} is already connected or in the integration library.`, 'warning');
+      showToast(`${tool.name} is already connected.`, 'warning');
       return;
     }
     const newIntegration = { ...tool, status: 'connected' };
     setLocalIntegrations([newIntegration, ...localIntegrations]);
     setIsDialogOpen(false);
-    showToast(`Successfully connected telemetry source: ${tool.name}`, 'success');
+    showToast(`Connected: ${tool.name}`, 'success');
   };
 
   const handleOpenManage = (int: any) => {
@@ -67,7 +78,7 @@ export default function IntegrationsPage() {
   const handleDisconnect = () => {
     if (selectedIntegration) {
       setLocalIntegrations(localIntegrations.filter(i => i.name !== selectedIntegration.name));
-      showToast(`${selectedIntegration.name} disconnected successfully.`, 'error');
+      showToast(`${selectedIntegration.name} disconnected.`, 'error');
     }
     handleMenuClose();
   };
@@ -82,7 +93,7 @@ export default function IntegrationsPage() {
 
   return (
     <DashboardLayout title="Platform Integrations">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }} className="mobile-stack">
         <p style={{ color: 'var(--text-secondary)' }}>Connect and manage your security tool telemetry sources.</p>
         <button 
           className="btn btn-primary" 
@@ -94,14 +105,19 @@ export default function IntegrationsPage() {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
-        {localIntegrations.map((int) => (
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
+        gap: '1.5rem',
+        marginBottom: '2rem'
+      }}>
+        {paginatedIntegrations.map((int) => (
           <div key={int.name} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius)', background: 'var(--bg-light)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                  <Zap size={24} color={int.status === 'connected' ? 'var(--primary)' : int.status === 'paused' ? 'var(--risk-medium)' : 'var(--text-muted)'} />
                </div>
-               <div style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, background: int.status === 'connected' ? 'rgba(37, 99, 235, 0.1)' : int.status === 'paused' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(148, 163, 184, 0.1)', color: int.status === 'connected' ? 'var(--risk-low)' : int.status === 'paused' ? 'var(--risk-medium)' : 'var(--text-muted)' }}>
+               <div style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, background: int.status === 'connected' ? 'rgba(16, 185, 129, 0.1)' : int.status === 'paused' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(148, 163, 184, 0.1)', color: int.status === 'connected' ? 'var(--risk-low)' : int.status === 'paused' ? 'var(--risk-medium)' : 'var(--text-muted)' }}>
                  {int.status.toUpperCase()}
                </div>
             </div>
@@ -118,25 +134,25 @@ export default function IntegrationsPage() {
           </div>
         ))}
       </div>
+      
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
       {/* CATALOG DIALOG */}
       <Dialog 
         open={isDialogOpen} 
         onClose={() => setIsDialogOpen(false)}
         PaperProps={{
-          style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '500px' }
+          style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', minWidth: '500px' }
         }}
       >
-        <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Integration Catalog</DialogTitle>
+        <DialogTitle style={{ borderBottom: '1px solid var(--border)' }}>Integration Catalog</DialogTitle>
         <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>Select a third-party source to securely route system telemetry data.</p>
+          <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Select a source to securely route telemetry data.</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {availableTools.map(tool => (
                <div key={tool.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius)' }}>
                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                   <div style={{ width: '32px', height: '32px', borderRadius: '4px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                     <LinkIcon size={16} color="var(--text-muted)" />
-                   </div>
+                    <LinkIcon size={16} color="var(--text-muted)" />
                    <div>
                      <h5 style={{ fontSize: '0.875rem', fontWeight: 600 }}>{tool.name}</h5>
                      <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{tool.type} · {tool.provider}</p>
@@ -158,17 +174,17 @@ export default function IntegrationsPage() {
       <Dialog 
         open={isManageDialogOpen} 
         onClose={() => setIsManageDialogOpen(false)}
-        PaperProps={{ style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' } }}
+        PaperProps={{ style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', minWidth: '400px' } }}
       >
-        <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Configure {managedIntegration?.name}</DialogTitle>
+        <DialogTitle style={{ borderBottom: '1px solid var(--border)' }}>Configure {managedIntegration?.name}</DialogTitle>
         <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>API Primary Key</label>
-            <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }} />
+            <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)' }} />
           </div>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Webhook Endpoint</label>
-            <input type="text" defaultValue="https://api.shieldos.local/webhook/receiver" style={{ width: '100%', padding: '0.75rem', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none', cursor: 'not-allowed' }} disabled />
+            <input type="text" defaultValue="https://api.ostec.local/webhook/receiver" style={{ width: '100%', padding: '0.75rem', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', cursor: 'not-allowed' }} disabled />
           </div>
         </DialogContent>
         <DialogActions style={{ borderTop: '1px solid var(--border)', padding: '1rem' }}>
@@ -177,17 +193,14 @@ export default function IntegrationsPage() {
         </DialogActions>
       </Dialog>
 
-      {/* MORE OPTIONS MENU */}
       <Menu
         anchorEl={menuAnchorEl}
         open={Boolean(menuAnchorEl)}
         onClose={handleMenuClose}
-        PaperProps={{
-          style: { background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-primary)' }
-        }}
+        PaperProps={{ style: { background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-primary)' } }}
       >
-        <MenuItem onClick={handlePauseTelemetry} style={{ fontSize: '0.875rem', color: 'var(--risk-medium)', fontFamily: 'var(--font-sans)' }}>Pause Telemetry</MenuItem>
-        <MenuItem onClick={handleDisconnect} style={{ fontSize: '0.875rem', color: 'var(--risk-high)', fontFamily: 'var(--font-sans)' }}>Disconnect Tool</MenuItem>
+        <MenuItem onClick={handlePauseTelemetry} style={{ fontSize: '0.875rem', color: 'var(--risk-medium)' }}>Pause Telemetry</MenuItem>
+        <MenuItem onClick={handleDisconnect} style={{ fontSize: '0.875rem', color: 'var(--risk-high)' }}>Disconnect Tool</MenuItem>
       </Menu>
     </DashboardLayout>
   );

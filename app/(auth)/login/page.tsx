@@ -135,7 +135,7 @@ export default function LoginPage() {
         {/* Logo at top left */}
         <div style={{ position: 'absolute', top: '3rem', left: '3rem', zIndex: 10 }}>
           <Link href="/" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', display: 'flex', alignItems: 'center', gap: '0.5rem', letterSpacing: '0.05em' }}>
-            <span style={{ color: '#11D91A' }}>//</span> ShieldOS
+            <img src="/logo.svg" alt="Ostec Logo" style={{ height: '40px', filter: 'brightness(0) invert(1)' }} />
           </Link>
         </div>
         
@@ -153,7 +153,7 @@ export default function LoginPage() {
       }}>
         <div style={{ maxWidth: '400px', width: '100%' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'white', marginBottom: '2.5rem' }}>
-            ShieldOS Identity System
+            Ostec Identity System
           </h2>
 
           <form onSubmit={handleLogin}>

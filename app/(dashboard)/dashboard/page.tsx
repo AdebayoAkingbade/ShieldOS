@@ -53,10 +53,10 @@ export default function DashboardPage() {
       <div ref={containerRef}>
         
         {/* Top Control Panels */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: '1rem', marginBottom: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 3fr', gap: '1rem', marginBottom: '1rem' }} className="grid-responsive-dashboard">
           
           {/* Threat Level Indicator */}
-          <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'var(--bg-dark)' }}>
+          <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', background: 'var(--bg-dark)', minHeight: '160px' }}>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, marginBottom: '1rem' }}>Threat Level</p>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <div className="status-dot" style={{ backgroundColor: threatColor, width: '12px', height: '12px' }}></div>
@@ -65,7 +65,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Metric Blocks */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }} className="grid-responsive-metrics">
             {stats.map((stat) => (
               <div key={stat.name} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', borderTop: `2px solid ${stat.color}` }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -81,7 +81,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Mid Section: Activity Feed & Risk Score */}
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1rem', marginBottom: '1rem' }} className="grid-responsive-dashboard">
           
           {/* Threat Activity Feed */}
           <div className="card" style={{ display: 'flex', flexDirection: 'column', padding: 0, overflow: 'hidden' }}>
@@ -145,51 +145,53 @@ export default function DashboardPage() {
             <Link href="/incidents" className="btn btn-outline" style={{ fontSize: '0.75rem', padding: '0.25rem 0.75rem' }}>View All</Link>
           </div>
           
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <thead>
-              <tr style={{ background: 'var(--bg-card)', borderBottom: '1px solid var(--border)' }}>
-                <th style={{ padding: '0.75rem 1rem', fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Timestamp</th>
-                <th style={{ padding: '0.75rem 1rem', fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Severity</th>
-                <th style={{ padding: '0.75rem 1rem', fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Event Details</th>
-                <th style={{ padding: '0.75rem 1rem', fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tenantIncidents.slice(0, 5).map((inc) => (
-                <tr key={inc.id} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.1s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'var(--border)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
-                  <td className="font-mono" style={{ padding: '0.75rem 1rem', fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-                    {new Date(inc.timestamp).toISOString().replace('T', ' ').slice(0, 19)}
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <div className="status-dot" style={{ 
-                        backgroundColor: inc.severity === 'high' ? 'var(--risk-high)' : inc.severity === 'medium' ? 'var(--risk-medium)' : 'var(--risk-low)',
-                        animation: inc.severity === 'high' ? 'pulse-ring 2s infinite' : 'none'
-                      }}></div>
-                      <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-primary)' }}>{inc.severity.toUpperCase()}</span>
-                    </div>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <p style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-primary)' }}>{inc.title}</p>
-                    <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>ID:{inc.id} | CAT:{inc.category}</p>
-                  </td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <span style={{ 
-                      padding: '0.125rem 0.5rem', 
-                      border: `1px solid ${inc.status === 'open' ? 'var(--risk-high)' : inc.status === 'investigating' ? 'var(--risk-medium)' : 'var(--border-focus)'}`,
-                      color: inc.status === 'open' ? 'var(--risk-high)' : inc.status === 'investigating' ? 'var(--risk-medium)' : 'var(--text-muted)',
-                      borderRadius: '2px', 
-                      fontSize: '0.7rem', 
-                      fontWeight: 600,
-                      textTransform: 'uppercase'
-                    }}>
-                      {inc.status}
-                    </span>
-                  </td>
+          <div className="responsive-table-container">
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }} className="table-min-width">
+              <thead>
+                <tr style={{ background: 'var(--bg-card)', borderBottom: '1px solid var(--border)' }}>
+                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Timestamp</th>
+                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Severity</th>
+                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Event Details</th>
+                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.7rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {tenantIncidents.slice(0, 5).map((inc) => (
+                  <tr key={inc.id} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.1s' }} onMouseEnter={(e) => e.currentTarget.style.background = 'var(--border)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                    <td className="font-mono" style={{ padding: '0.75rem 1rem', fontSize: '0.75rem', color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
+                      {new Date(inc.timestamp).toISOString().replace('T', ' ').slice(0, 19)}
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <div className="status-dot" style={{ 
+                          backgroundColor: inc.severity === 'high' ? 'var(--risk-high)' : inc.severity === 'medium' ? 'var(--risk-medium)' : 'var(--risk-low)',
+                          animation: inc.severity === 'high' ? 'pulse-ring 2s infinite' : 'none'
+                        }}></div>
+                        <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-primary)' }}>{inc.severity.toUpperCase()}</span>
+                      </div>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem' }}>
+                      <p style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-primary)' }}>{inc.title}</p>
+                      <p className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>ID:{inc.id} | CAT:{inc.category}</p>
+                    </td>
+                    <td style={{ padding: '0.75rem 1rem' }}>
+                      <span style={{ 
+                        padding: '0.125rem 0.5rem', 
+                        border: `1px solid ${inc.status === 'open' ? 'var(--risk-high)' : inc.status === 'investigating' ? 'var(--risk-medium)' : 'var(--border-focus)'}`,
+                        color: inc.status === 'open' ? 'var(--risk-high)' : inc.status === 'investigating' ? 'var(--risk-medium)' : 'var(--text-muted)',
+                        borderRadius: '2px', 
+                        fontSize: '0.7rem', 
+                        fontWeight: 600,
+                        textTransform: 'uppercase'
+                      }}>
+                        {inc.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </DashboardLayout>
