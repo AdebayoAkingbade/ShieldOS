@@ -3,22 +3,25 @@
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { switchTenant } from '@/store/authSlice';
 import { tenants } from '@/lib/mock-data';
-import { Bell, Search, LogOut, Menu } from 'lucide-react';
+import { Bell, Search, LogOut, Menu, Moon, Sun } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { logout } from '@/store/authSlice';
 import { Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import { useToast } from '@/components/ui/ToastProvider';
+import { useTheme } from '@/components/Providers';
 
 type HeaderProps = {
   title: string;
   onToggleSidebar: () => void;
+  showMenuButton: boolean;
 };
 
-export function Header({ title, onToggleSidebar }: HeaderProps) {
+export function Header({ title, onToggleSidebar, showMenuButton }: HeaderProps) {
   const { tenant } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { showToast } = useToast();
+  const { theme, toggleTheme } = useTheme();
 
   const handleSwitch = (event: SelectChangeEvent<string>) => {
     const value = event.target.value;
@@ -59,7 +62,7 @@ export function Header({ title, onToggleSidebar }: HeaderProps) {
           onClick={onToggleSidebar}
           className="mobile-menu-button"
           style={{
-            display: 'none',
+            display: showMenuButton ? 'inline-flex' : 'none',
             background: 'transparent',
             border: '1px solid var(--border)',
             color: 'var(--text-secondary)',
@@ -77,7 +80,35 @@ export function Header({ title, onToggleSidebar }: HeaderProps) {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-        
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          style={{
+            background: 'transparent',
+            border: '1px solid var(--border)',
+            color: 'var(--text-secondary)',
+            width: '38px',
+            height: '38px',
+            borderRadius: '10px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = 'var(--text-primary)';
+            e.currentTarget.style.background = 'var(--primary-light)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = 'var(--text-secondary)';
+            e.currentTarget.style.background = 'transparent';
+          }}
+        >
+          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+
         <Select
           value={tenant?.id || tenants[0].id}
           onChange={handleSwitch}
@@ -141,11 +172,11 @@ export function Header({ title, onToggleSidebar }: HeaderProps) {
           </MenuItem>
         </Select>
 
-        <div onClick={() => showToast('Opening global search index...', 'info')} style={{ color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }} onMouseEnter={(e)=>e.currentTarget.style.color='white'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-muted)'}>
+        <div onClick={() => showToast('Opening global search index...', 'info')} style={{ color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--text-primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-muted)'}>
           <Search size={20} />
         </div>
         
-        <div onClick={() => showToast('You have 3 unread alerts.', 'warning')} style={{ position: 'relative', color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }} onMouseEnter={(e)=>e.currentTarget.style.color='white'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-muted)'}>
+        <div onClick={() => showToast('You have 3 unread alerts.', 'warning')} style={{ position: 'relative', color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }} onMouseEnter={(e)=>e.currentTarget.style.color='var(--text-primary)'} onMouseLeave={(e)=>e.currentTarget.style.color='var(--text-muted)'}>
           <Bell size={20} />
           <span style={{ 
             position: 'absolute', 

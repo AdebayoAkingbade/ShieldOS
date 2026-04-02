@@ -171,7 +171,7 @@ export default function IncidentDetailPage() {
                   onChange={(e) => setCommentText(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handlePostComment()}
                   placeholder="Add a comment or update..."
-                  style={{ flex: 1, padding: '0.75rem 1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', background: 'var(--bg-card)', color: 'white', outline: 'none' }}
+                  style={{ flex: 1, padding: '0.75rem 1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', background: 'var(--bg-card)', color: 'var(--text-primary)', outline: 'none' }}
                 />
                 <button onClick={handlePostComment} className="btn btn-primary" disabled={!commentText.trim()} style={{ opacity: !commentText.trim() ? 0.5 : 1 }}>
                   <Send size={18} />

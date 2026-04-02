@@ -27,18 +27,24 @@ const navItems = [
 
 type SidebarProps = {
   open: boolean;
+  isMobile: boolean;
   onClose: () => void;
 };
 
-export function Sidebar({ open, onClose }: SidebarProps) {
+export function Sidebar({ open, isMobile, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { tenant } = useAppSelector((state) => state.auth);
+  
+  const handleNavClick = () => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 960) {
+      onClose();
+    }
+  };
 
   return (
     <aside
-      className={`sidebar ${open ? 'open' : ''}`}
+      className={`sidebar ${isMobile ? 'mobile-sidebar' : 'desktop-sidebar'} ${open ? 'open' : ''}`}
       style={{
-        width: '260px',
         height: '100vh',
         borderRight: '1px solid var(--border)',
         background: 'var(--bg-card)',
@@ -61,16 +67,20 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           gap: '0.5rem',
         }}
       >
-        <h2
-          style={{
-            fontSize: '1.25rem',
-            color: 'var(--primary)',
-            fontWeight: 700,
-            margin: 0,
-          }}
-        >
-          ShieldOS
-        </h2>
+        <div className="sidebar-brand">
+          <div className="sidebar-brand-mark">S</div>
+          <h2
+            className="sidebar-brand-text"
+            style={{
+              fontSize: '1.25rem',
+              color: 'var(--primary)',
+              fontWeight: 700,
+              margin: 0,
+            }}
+          >
+            ShieldOS
+          </h2>
+        </div>
         <button
           aria-label="Close navigation"
           onClick={onClose}
@@ -91,7 +101,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         </button>
       </div>
 
-      <div style={{ padding: '0 1.5rem 0.75rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+      <div className="sidebar-tenant" style={{ padding: '0 1.5rem 0.75rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
         {tenant?.name || 'Loading...'}
       </div>
 
@@ -115,18 +125,20 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                 marginBottom: '0.5rem',
                 transition: 'all 0.2s',
               }}
-              className="nav-link"
-              onClick={onClose}
+              className="nav-link sidebar-link"
+              onClick={handleNavClick}
             >
-              <Icon size={20} style={{ marginRight: '0.75rem' }} />
-              <span style={{ flex: 1 }}>{item.name}</span>
-              {isActive && <ChevronRight size={16} />}
+              <span className="sidebar-link-icon">
+                <Icon size={20} />
+              </span>
+              <span className="sidebar-link-label" style={{ flex: 1 }}>{item.name}</span>
+              {isActive && <ChevronRight className="sidebar-link-chevron" size={16} />}
             </Link>
           );
         })}
       </nav>
 
-      <div style={{ padding: '1.5rem', borderTop: '1px solid var(--border)' }}>
+      <div className="sidebar-user" style={{ padding: '1.5rem', borderTop: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div
             style={{
@@ -143,7 +155,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           >
             A
           </div>
-          <div style={{ overflow: 'hidden' }}>
+          <div className="sidebar-user-copy" style={{ overflow: 'hidden' }}>
             <p
               style={{
                 fontSize: '0.875rem',

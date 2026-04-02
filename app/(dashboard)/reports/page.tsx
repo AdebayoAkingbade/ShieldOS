@@ -242,7 +242,7 @@ export default function ReportsPage() {
       <Dialog 
         open={isDialogOpen} 
         onClose={() => setIsDialogOpen(false)}
-        PaperProps={{ style: { background: 'var(--bg-dark)', color: 'white', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' } }}
+        PaperProps={{ style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' } }}
       >
         <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Create Report Request</DialogTitle>
         <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -253,7 +253,7 @@ export default function ReportsPage() {
               value={reportName}
               onChange={(e) => setReportName(e.target.value)}
               placeholder="e.g. Q3 Access Audit"
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
             />
           </div>
           <div>
@@ -261,7 +261,7 @@ export default function ReportsPage() {
             <select 
               value={reportType}
               onChange={(e) => setReportType(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
             >
               <option value="Compliance Assessment">Compliance Assessment (SOC2)</option>
               <option value="Threat Intelligence">Threat Intelligence (STIX)</option>
@@ -279,7 +279,7 @@ export default function ReportsPage() {
       <Dialog 
         open={isSearchDialogOpen} 
         onClose={() => setIsSearchDialogOpen(false)}
-        PaperProps={{ style: { background: 'var(--bg-dark)', color: 'white', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' } }}
+        PaperProps={{ style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' } }}
       >
         <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Search Reports</DialogTitle>
         <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -290,7 +290,7 @@ export default function ReportsPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Filter by name or type..."
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
             />
           </div>
         </DialogContent>
@@ -310,7 +310,7 @@ export default function ReportsPage() {
             background: 'var(--bg-card)',
             border: '1px solid var(--border)',
             boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.5)',
-            color: 'white'
+            color: 'var(--text-primary)'
           }
         }}
       >

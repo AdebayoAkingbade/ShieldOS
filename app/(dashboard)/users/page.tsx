@@ -143,7 +143,7 @@ export default function UsersPage() {
         PaperProps={{
           style: {
             background: 'var(--bg-dark)',
-            color: 'white',
+            color: 'var(--text-primary)',
             border: '1px solid var(--border)',
             fontFamily: 'var(--font-sans)',
             minWidth: '400px'
@@ -159,7 +159,7 @@ export default function UsersPage() {
               value={newUserName}
               onChange={(e) => setNewUserName(e.target.value)}
               placeholder="e.g. John Doe"
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
             />
           </div>
           <div>
@@ -169,7 +169,7 @@ export default function UsersPage() {
               value={newUserEmail}
               onChange={(e) => setNewUserEmail(e.target.value)}
               placeholder="john@example.com"
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
             />
           </div>
           <div>
@@ -177,7 +177,7 @@ export default function UsersPage() {
             <select 
               value={newUserRole}
               onChange={(e) => setNewUserRole(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
             >
               <option value="admin">Administrator (Full Access)</option>
               <option value="analyst">Security Analyst (Read/Write Alerts)</option>
@@ -197,7 +197,7 @@ export default function UsersPage() {
         open={Boolean(menuAnchorEl)}
         onClose={handleMenuClose}
         PaperProps={{
-          style: { background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'white' }
+          style: { background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-primary)' }
         }}
       >
         <MenuItem onClick={handleToggleRole} style={{ fontSize: '0.875rem', fontFamily: 'var(--font-sans)' }}>Switch Role Context</MenuItem>

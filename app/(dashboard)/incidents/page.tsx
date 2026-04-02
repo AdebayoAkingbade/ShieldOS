@@ -243,7 +243,7 @@ export default function IncidentsPage() {
         PaperProps={{
           style: {
             background: 'var(--bg-dark)',
-            color: 'white',
+            color: 'var(--text-primary)',
             border: '1px solid var(--border)',
             fontFamily: 'var(--font-sans)',
             minWidth: '400px'
@@ -259,7 +259,7 @@ export default function IncidentsPage() {
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               placeholder="E.g., Suspicious Login Detected"
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
             />
           </div>
           <div>
@@ -267,7 +267,7 @@ export default function IncidentsPage() {
             <select 
               value={newCategory}
               onChange={(e) => setNewCategory(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
             >
               <option value="Malware">Malware</option>
               <option value="Network">Network</option>
@@ -280,7 +280,7 @@ export default function IncidentsPage() {
             <select 
               value={newSeverity}
               onChange={(e) => setNewSeverity(e.target.value)}
-              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}
+              style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}
             >
               <option value="high">High</option>
               <option value="medium">Medium</option>

@@ -124,7 +124,7 @@ export default function IntegrationsPage() {
         open={isDialogOpen} 
         onClose={() => setIsDialogOpen(false)}
         PaperProps={{
-          style: { background: 'var(--bg-dark)', color: 'white', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '500px' }
+          style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '500px' }
         }}
       >
         <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Integration Catalog</DialogTitle>
@@ -158,13 +158,13 @@ export default function IntegrationsPage() {
       <Dialog 
         open={isManageDialogOpen} 
         onClose={() => setIsManageDialogOpen(false)}
-        PaperProps={{ style: { background: 'var(--bg-dark)', color: 'white', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' } }}
+        PaperProps={{ style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' } }}
       >
         <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Configure {managedIntegration?.name}</DialogTitle>
         <DialogContent style={{ paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>API Primary Key</label>
-            <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }} />
+            <input type="password" placeholder="••••••••••••••••" style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }} />
           </div>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Webhook Endpoint</label>
@@ -183,7 +183,7 @@ export default function IntegrationsPage() {
         open={Boolean(menuAnchorEl)}
         onClose={handleMenuClose}
         PaperProps={{
-          style: { background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'white' }
+          style: { background: 'var(--bg-card)', border: '1px solid var(--border)', color: 'var(--text-primary)' }
         }}
       >
         <MenuItem onClick={handlePauseTelemetry} style={{ fontSize: '0.875rem', color: 'var(--risk-medium)', fontFamily: 'var(--font-sans)' }}>Pause Telemetry</MenuItem>

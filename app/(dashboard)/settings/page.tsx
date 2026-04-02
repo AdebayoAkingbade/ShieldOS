@@ -141,7 +141,7 @@ export default function SettingsPage() {
         open={Boolean(activeDialog)} 
         onClose={handleSectionClose}
         PaperProps={{
-          style: { background: 'var(--bg-dark)', color: 'white', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' }
+          style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' }
         }}
       >
         <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>{activeDialog?.name}</DialogTitle>
@@ -149,13 +149,13 @@ export default function SettingsPage() {
           {activeDialog?.name === 'Organization Profile' && (
             <div>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Organization Name</label>
-              <input value={localFormData.orgName} onChange={(e) => setLocalFormData({...localFormData, orgName: e.target.value})} type="text" style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }} />
+              <input value={localFormData.orgName} onChange={(e) => setLocalFormData({...localFormData, orgName: e.target.value})} type="text" style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }} />
             </div>
           )}
           {activeDialog?.name === 'Security Policy' && (
             <div>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Threat Threshold</label>
-              <select value={localFormData.threatLevel} onChange={(e) => setLocalFormData({...localFormData, threatLevel: e.target.value})} style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }}>
+              <select value={localFormData.threatLevel} onChange={(e) => setLocalFormData({...localFormData, threatLevel: e.target.value})} style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }}>
                 <option value="Strict">Strict (Block all anomalies)</option>
                 <option value="Moderate">Moderate (Review required for medium risk)</option>
                 <option value="Lenient">Lenient (Log only)</option>
@@ -165,7 +165,7 @@ export default function SettingsPage() {
           {activeDialog?.name === 'API Management' && (
             <div>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Global Rate Limit (requests/min)</label>
-              <input value={localFormData.apiRateLimit} onChange={(e) => setLocalFormData({...localFormData, apiRateLimit: e.target.value})} type="number" style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'white', outline: 'none' }} />
+              <input value={localFormData.apiRateLimit} onChange={(e) => setLocalFormData({...localFormData, apiRateLimit: e.target.value})} type="number" style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', outline: 'none' }} />
             </div>
           )}
           {activeDialog?.name === 'Notifications' && (
@@ -185,7 +185,7 @@ export default function SettingsPage() {
         open={isConfirmSaveOpen} 
         onClose={() => setIsConfirmSaveOpen(false)}
         PaperProps={{
-          style: { background: 'var(--bg-dark)', color: 'white', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' }
+          style: { background: 'var(--bg-dark)', color: 'var(--text-primary)', border: '1px solid var(--border)', fontFamily: 'var(--font-sans)', minWidth: '400px' }
         }}
       >
         <DialogTitle style={{ borderBottom: '1px solid var(--border)', fontSize: '1.125rem', fontWeight: 600 }}>Confirm Platform Sync</DialogTitle>
@@ -193,7 +193,7 @@ export default function SettingsPage() {
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>You are about to commit breaking configuration changes to the following modules:</p>
           <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
              {pendingChanges.map(change => (
-               <div key={change} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'white' }}>
+               <div key={change} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--text-primary)' }}>
                  <CheckCircle size={16} color="var(--primary)" />
                  {change}
                </div>
