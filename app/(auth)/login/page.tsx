@@ -8,62 +8,92 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import gsap from 'gsap';
 
-// Generates random green pixels around the canvas to mimic the uploaded exabeam image
-const PixelArt = () => {
+const CyberAura = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     if (!containerRef.current) return;
-    const pixels = containerRef.current.children;
-    gsap.fromTo(pixels, 
-      { opacity: 0, scale: 0.8 }, 
-      { 
-        opacity: () => 0.5 + Math.random() * 0.5, 
-        scale: 1,
-        duration: 1.5, 
-        stagger: 0.05, 
-        ease: 'power2.out' 
-      }
-    );
-    
-    // Continuous subtle pulsing
-    gsap.to(pixels, {
-      opacity: () => 0.4 + Math.random() * 0.6,
-      duration: () => 1 + Math.random() * 2,
+    const rings = containerRef.current.querySelectorAll('.aura-ring');
+    gsap.to(rings, {
+      scale: 1.05,
+      opacity: 0.85,
+      duration: 3,
       repeat: -1,
       yoyo: true,
       ease: 'sine.inOut',
-      stagger: 0.1
+      stagger: 0.4
     });
   }, []);
 
-  const createPixelGroup = (x: number, y: number, pattern: number[][]) => {
-    return pattern.map((pos, i) => (
-      <div key={`p-${x}-${y}-${i}`} style={{
-        position: 'absolute',
-        top: `${y + pos[1] * 20}px`,
-        left: `${x + pos[0] * 20}px`,
-        width: '20px',
-        height: '20px',
-        background: ['#175E19', '#1C9321', '#11D91A', '#0DCA16', '#218E25'][Math.floor(Math.random() * 5)],
-      }} />
-    ));
-  };
-
   return (
-    <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
-      {/* Pattern 1 */}
-      {createPixelGroup(150, 150, [[0,0], [1,0], [0,1], [1,1], [2,-1], [3,-2]])}
-      {/* Pattern 2 */}
-      {createPixelGroup(250, 450, [[0,0], [1,0], [-1,1], [0,1], [0,2], [1,2]])}
-      {/* Pattern 3 */}
-      {createPixelGroup(400, 300, [[0,0], [1,0], [1,1], [2,1], [2,2]])}
-      {/* Scattered pixels */}
-      {createPixelGroup(100, 350, [[0,0], [1,0]])}
-      {createPixelGroup(300, 200, [[0,0]])}
-      {createPixelGroup(450, 500, [[0,0]])}
+    <div
+      ref={containerRef}
+      style={{
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+        overflow: 'hidden',
+        background: 'radial-gradient(circle at 30% 30%, rgba(17,217,26,0.15), transparent 45%), radial-gradient(circle at 70% 60%, rgba(59,130,246,0.12), transparent 55%), linear-gradient(135deg, #07101f 0%, #040914 100%)'
+      }}
+    >
+      <div className="aura-ring" style={ringStyle(180, '#11D91A')} />
+      <div className="aura-ring" style={ringStyle(260, '#3B82F6')} />
+      <div className="aura-ring" style={ringStyle(340, '#10B981')} />
+      <div style={gridStyle} />
+      <div style={shieldStyle}>
+        <div style={shieldInnerStyle}>OS</div>
+      </div>
     </div>
   );
+};
+
+const ringStyle = (size: number, color: string): React.CSSProperties => ({
+  position: 'absolute',
+  inset: '50%',
+  width: `${size}px`,
+  height: `${size}px`,
+  marginLeft: `-${size / 2}px`,
+  marginTop: `-${size / 2}px`,
+  border: `1px solid ${color}33`,
+  borderRadius: '50%',
+  boxShadow: `0 0 35px ${color}44`,
+  filter: 'blur(0.2px)'
+});
+
+const gridStyle: React.CSSProperties = {
+  position: 'absolute',
+  inset: '12%',
+  border: '1px solid rgba(255,255,255,0.06)',
+  backgroundImage: 'linear-gradient(transparent 90%, rgba(255,255,255,0.05) 90%), linear-gradient(90deg, transparent 90%, rgba(255,255,255,0.05) 90%)',
+  backgroundSize: '40px 40px',
+  maskImage: 'radial-gradient(ellipse at center, white 70%, transparent 100%)'
+};
+
+const shieldStyle: React.CSSProperties = {
+  position: 'absolute',
+  inset: '50%',
+  width: '110px',
+  height: '130px',
+  marginLeft: '-55px',
+  marginTop: '-65px',
+  background: 'linear-gradient(180deg, rgba(17,217,26,0.25), rgba(59,130,246,0.2))',
+  border: '1px solid rgba(255,255,255,0.15)',
+  borderRadius: '16px 16px 28px 28px',
+  boxShadow: '0 0 25px rgba(17,217,26,0.35), inset 0 0 20px rgba(59,130,246,0.25)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  letterSpacing: '0.1em',
+  fontWeight: 700,
+  color: '#e5fdf0',
+  textShadow: '0 0 8px rgba(17,217,26,0.6)'
+};
+
+const shieldInnerStyle: React.CSSProperties = {
+  border: '1px solid rgba(255,255,255,0.25)',
+  padding: '10px 14px',
+  borderRadius: '10px',
+  background: 'rgba(0,0,0,0.35)'
 };
 
 export default function LoginPage() {
@@ -109,7 +139,7 @@ export default function LoginPage() {
           </Link>
         </div>
         
-        <PixelArt />
+        <CyberAura />
       </div>
 
       {/* RIGHT PANE - Simple Form */}

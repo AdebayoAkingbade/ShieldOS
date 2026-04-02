@@ -59,7 +59,7 @@ export function DashboardLayout({
 
       <Header title={title} onToggleSidebar={() => setIsSidebarOpen((v) => !v)} />
 
-      <main className="main-content" style={{ marginLeft: '260px', padding: '1rem' }}>
+      <main className="main-content" style={{ padding: '1rem' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           {children}
         </div>

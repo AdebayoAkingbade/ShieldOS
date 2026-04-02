@@ -48,8 +48,8 @@ export function Header({ title, onToggleSidebar }: HeaderProps) {
         position: 'sticky',
         top: 0,
         zIndex: 55,
-        width: 'calc(100% - 260px)',
-        marginLeft: '260px',
+        width: '100%',
+        marginLeft: 0,
         gap: '1rem',
       }}
     >

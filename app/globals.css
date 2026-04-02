@@ -97,6 +97,7 @@ button {
 .layout-shell {
   display: flex;
   min-height: 100vh;
+  padding-left: 260px;
 }
 
 .sidebar {
@@ -108,7 +109,7 @@ button {
 }
 
 .header-bar {
-  transition: margin-left 0.25s ease, width 0.25s ease;
+  transition: padding 0.25s ease, width 0.25s ease;
 }
 
 .mobile-menu-button {
@@ -116,10 +117,14 @@ button {
 }
 
 .main-content {
-  transition: margin-left 0.25s ease;
+  transition: padding 0.25s ease;
 }
 
 @media (max-width: 960px) {
+  .layout-shell {
+    padding-left: 0;
+  }
+
   .sidebar {
     transform: translateX(-100%);
   }
@@ -147,7 +152,6 @@ button {
   }
 
   .main-content {
-    margin-left: 0 !important;
     padding: 1rem !important;
   }
 }
