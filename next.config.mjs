@@ -19,6 +19,14 @@ const nextConfig = {
       },
     ];
   },
+  experimental: {
+    optimizePackageImports: ['@mui/material', 'lucide-react'],
+  },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
 };
 
 export default nextConfig;
