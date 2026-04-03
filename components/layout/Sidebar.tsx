@@ -3,24 +3,25 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
-  ShieldAlert,
-  Database,
+  Radar,
+  AlertTriangle,
+  Monitor,
   BarChart3,
   Users,
   Settings,
   Zap,
   ChevronRight,
   X,
+  Terminal
 } from 'lucide-react';
 import { useAppSelector } from '@/store/hooks';
 
 const navItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Incidents', href: '/incidents', icon: ShieldAlert },
-  { name: 'Assets', href: '/assets', icon: Database },
+  { name: 'Dashboard', href: '/dashboard', icon: Radar },
+  { name: 'Incidents', href: '/incidents', icon: AlertTriangle },
+  { name: 'Assets', href: '/assets', icon: Monitor },
   { name: 'Integrations', href: '/integrations', icon: Zap },
-  { name: 'Reports', href: '/reports', icon: BarChart3 },
+  { name: 'Log Center', href: '/log-center', icon: Terminal },
   { name: 'Users', href: '/users', icon: Users },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];

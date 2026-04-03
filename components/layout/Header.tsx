@@ -47,16 +47,16 @@ export function Header({ title, onToggleSidebar, showMenuButton }: HeaderProps) 
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 2rem',
+        padding: '0 min(2rem, 1rem)',
         position: 'sticky',
         top: 0,
         zIndex: 55,
         width: '100%',
         marginLeft: 0,
-        gap: '1rem',
+        gap: '0.5rem',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0 }}>
         <button
           aria-label="Open navigation"
           onClick={onToggleSidebar}
@@ -76,7 +76,7 @@ export function Header({ title, onToggleSidebar, showMenuButton }: HeaderProps) 
           <Menu size={18} />
         </button>
 
-        <h3 style={{ fontSize: '1.25rem', fontWeight: 600, margin: 0 }}>{title}</h3>
+        <h3 style={{ fontSize: 'min(1.1rem, 4vw)', fontWeight: 700, margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</h3>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>

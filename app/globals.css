@@ -30,22 +30,22 @@
 :root[data-theme='light'] {
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
-  --primary-light: rgba(37, 99, 235, 0.12);
+  --primary-light: rgba(37, 99, 235, 0.1);
 
-  --bg-light: #f3f7fc;
-  --bg-card: #ffffff;
-  --bg-dark: #e8eef8;
-  --bg-dark-card: #f7faff;
+  --bg-light: #F1F5F9; /* Slate 100 - Deep slate for SOC feel */
+  --bg-card: #FFFFFF;
+  --bg-dark: #E2E8F0; /* Slate 200 */
+  --bg-dark-card: #F8FAFC;
 
-  --text-primary: #0f172a;
+  --text-primary: #0F172A;
   --text-secondary: #475569;
-  --text-muted: #64748b;
+  --text-muted: #64748B;
 
-  --border: #d7e1ef;
-  --border-focus: #94a3b8;
+  --border: #CBD5E1;
+  --border-focus: #94A3B8;
 
-  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.06);
-  --shadow-md: 0 10px 30px -12px rgb(15 23 42 / 0.16);
+  --shadow-sm: 0 1px 3px 0 rgb(15 23 42 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(15 23 42 / 0.1);
 }
 
 * {
@@ -428,6 +428,54 @@ button {
 
 .font-mono {
   font-family: var(--font-mono);
+}
+
+.grid-bg {
+  background-image: 
+    linear-gradient(rgba(30, 41, 59, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 41, 59, 0.3) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+:root[data-theme='light'] .grid-bg {
+  background-image: 
+    linear-gradient(rgba(203, 213, 225, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
+}
+
+.severity-border-high { border-left: 4px solid var(--risk-high); }
+.severity-border-medium { border-left: 4px solid var(--risk-medium); }
+.severity-border-low { border-left: 4px solid var(--risk-low); }
+
+/* Threat Glowing Effect */
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px var(--risk-high); opacity: 0.8; }
+  50% { box-shadow: 0 0 20px var(--risk-high); opacity: 1; }
+  100% { box-shadow: 0 0 5px var(--risk-high); opacity: 0.8; }
+}
+
+.threat-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+.threat-high-tint {
+  background-color: rgba(239, 68, 68, 0.05) !important;
+}
+
+
+@keyframes status-pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.animate-pulse-slow {
+  animation: status-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.hover-high-density:hover {
+  background-color: #1F2937 !important;
+  cursor: pointer;
 }
 
 /* Responsiveness Helpers */

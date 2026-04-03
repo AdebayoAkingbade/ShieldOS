@@ -26,6 +26,8 @@ export interface Incident {
   severity: Severity;
   category: string;
   timestamp: string;
+  lastAlert?: string;
+  riskScore?: number;
   tenantId: string;
   assignedTo?: string;
 }
@@ -36,6 +38,8 @@ export interface Asset {
   type: 'endpoint' | 'server' | 'network' | 'cloud';
   ipAddress: string;
   status: 'active' | 'inactive' | 'compromised';
+  riskScore: number;
+  vulnerabilitiesCount: number;
   lastSeen: string;
   tenantId: string;
 }

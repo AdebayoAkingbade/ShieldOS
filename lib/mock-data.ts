@@ -20,8 +20,8 @@ const subDays = (days: number) => {
 
 export const incidents: Incident[] = [
   // Tenant 1 (Acme) - 12 incidents
-  { id: 'inc-1', title: 'Suspicious Login detected', description: 'Failed login attempt from unrecognized IP', status: 'investigating', severity: 'medium', category: 'Auth', timestamp: subDays(0), tenantId: 't1' },
-  { id: 'inc-2', title: 'Malware Detected on Endpoint', description: 'Ransomware signature identified on PRD-WKS-01', status: 'open', severity: 'high', category: 'Endpoint', timestamp: subDays(1), tenantId: 't1' },
+  { id: 'inc-1', title: 'Suspicious Login detected', description: 'Failed login attempt from unrecognized IP', status: 'investigating', severity: 'medium', category: 'Auth', timestamp: subDays(0), riskScore: 45, tenantId: 't1' },
+  { id: 'inc-2', title: 'Malware Detected on Endpoint', description: 'Ransomware signature identified on PRD-WKS-01', status: 'open', severity: 'high', category: 'Endpoint', timestamp: subDays(1), riskScore: 88, tenantId: 't1' },
   { id: 'inc-3', title: 'Unusual Data Export', description: 'Large volume of data sent to external cloud storage', status: 'resolved', severity: 'high', category: 'Data', timestamp: subDays(2), tenantId: 't1' },
   { id: 'inc-4', title: 'Brute Force Attack', description: 'Multiple failed SSH attempts on app-server-01', status: 'closed', severity: 'medium', category: 'Network', timestamp: subDays(3), tenantId: 't1' },
   { id: 'inc-5', title: 'Phishing Email Link Clicked', description: 'User clicked on a known malicious URL', status: 'investigating', severity: 'medium', category: 'Email', timestamp: subDays(4), tenantId: 't1' },
@@ -47,9 +47,9 @@ export const incidents: Incident[] = [
 ];
 
 export const assets: Asset[] = [
-  { id: 'ast-1', name: 'PRD-SRV-01', type: 'server', ipAddress: '10.0.0.5', status: 'active', lastSeen: subDays(0), tenantId: 't1' },
-  { id: 'ast-2', name: 'PRD-WKS-01', type: 'endpoint', ipAddress: '10.0.0.10', status: 'compromised', lastSeen: subDays(1), tenantId: 't1' },
-  { id: 'ast-3', name: 'GLB-FW-01', type: 'network', ipAddress: '192.168.50.1', status: 'active', lastSeen: subDays(0), tenantId: 't2' },
+  { id: 'ast-1', name: 'PRD-SRV-01', type: 'server', ipAddress: '10.0.0.5', status: 'active', riskScore: 12, vulnerabilitiesCount: 3, lastSeen: subDays(0), tenantId: 't1' },
+  { id: 'ast-2', name: 'PRD-WKS-01', type: 'endpoint', ipAddress: '10.0.0.10', status: 'compromised', riskScore: 92, vulnerabilitiesCount: 14, lastSeen: subDays(1), tenantId: 't1' },
+  { id: 'ast-3', name: 'GLB-FW-01', type: 'network', ipAddress: '192.168.50.1', status: 'active', riskScore: 5, vulnerabilitiesCount: 0, lastSeen: subDays(0), tenantId: 't2' },
 ];
 
 export const reports: Report[] = [

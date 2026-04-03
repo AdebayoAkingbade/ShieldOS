@@ -137,100 +137,112 @@ export default function ReportsPage() {
   };
 
   return (
-    <DashboardLayout title="Reporting & Insights">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }} className="mobile-stack">
+    <DashboardLayout title="Log Center & Intelligence">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }} className="mobile-stack">
         <div>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>Generate and manage security performance and compliance reports.</p>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: 600 }}>Security event logs and regulatory compliance documentation portal.</p>
         </div>
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
-          <button onClick={() => setIsSearchDialogOpen(true)} className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Search size={18} />
+        <div style={{ display: 'flex', gap: '0.6rem' }}>
+          <button onClick={() => setIsSearchDialogOpen(true)} className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.7rem', padding: '0.4rem 0.8rem' }}>
+            <Search size={14} />
             <span>Search</span>
           </button>
-          <button onClick={() => setIsDialogOpen(true)} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Plus size={18} />
-            <span>Create Report</span>
+          <button onClick={() => setIsDialogOpen(true)} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.7rem', padding: '0.4rem 0.8rem' }}>
+            <Plus size={14} />
+            <span>Generate Report</span>
           </button>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', marginBottom: '2rem' }} className="grid-responsive-metrics">
-        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', border: '1px solid var(--border)' }}>
-          <div style={{ padding: '0.75rem', background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 'var(--radius)', width: 'fit-content' }}>
-            <BarChart3 size={20} />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.5rem' }} className="grid-responsive-metrics">
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', background: 'var(--bg-dark-card)' }}>
+          <div style={{ padding: '0.5rem', background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: '4px', width: 'fit-content' }}>
+            <BarChart3 size={18} />
           </div>
           <div>
-            <h4 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>Automated Reports</h4>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>Scheduled reports are sent every Monday at 08:00 UTC.</p>
+            <h4 style={{ fontWeight: 800, fontSize: '0.75rem', color: 'var(--text-primary)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Automation</h4>
+            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>Scheduled cadence: Weekly (Mon 08:00 UTC).</p>
           </div>
         </div>
         
-        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', border: '1px solid var(--border)' }}>
-          <div style={{ padding: '0.75rem', background: 'rgba(245, 158, 11, 0.1)', color: 'var(--risk-medium)', borderRadius: 'var(--radius)', width: 'fit-content' }}>
-            <Calendar size={20} />
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', background: 'var(--bg-dark-card)' }}>
+          <div style={{ padding: '0.5rem', background: 'rgba(245, 158, 11, 0.1)', color: 'var(--risk-medium)', borderRadius: '4px', width: 'fit-content' }}>
+            <Calendar size={18} />
           </div>
           <div>
-            <h4 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>Retention Policy</h4>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>Reports are persisted for 365 days unless specified.</p>
+            <h4 style={{ fontWeight: 800, fontSize: '0.75rem', color: 'var(--text-primary)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Retention</h4>
+            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>Technical data persisted for 365 days.</p>
           </div>
         </div>
 
-        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', border: '1px solid var(--border)' }}>
-          <div style={{ padding: '0.75rem', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--risk-low)', borderRadius: 'var(--radius)', width: 'fit-content' }}>
-            <Filter size={20} />
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', background: 'var(--bg-dark-card)' }}>
+          <div style={{ padding: '0.5rem', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--risk-low)', borderRadius: '4px', width: 'fit-content' }}>
+            <Filter size={18} />
           </div>
           <div>
-            <h4 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>Custom Filters</h4>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>Create specialized views by filtering on specific data tags.</p>
+            <h4 style={{ fontWeight: 800, fontSize: '0.75rem', color: 'var(--text-primary)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Audit Trail</h4>
+            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>Immutable logging active for all exports.</p>
           </div>
         </div>
       </div>
 
-      <div ref={containerRef} className="card" style={{ padding: 0, overflow: 'hidden', border: '1px solid var(--border)' }}>
+      <div ref={containerRef} className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-dark-card)' }}>
+        <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)', background: 'var(--bg-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <FileText size={14} /> Document Registry
+          </h3>
+          <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+             Page {currentPage} of {totalPages}
+          </div>
+        </div>
         <div className="responsive-table-container">
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }} className="table-min-width">
             <thead style={{ background: 'var(--bg-light)', borderBottom: '1px solid var(--border)' }}>
               <tr>
-                <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Report Name</th>
-                <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Type</th>
-                <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Date Range</th>
-                <th style={{ padding: '1.25rem 1rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Status</th>
-                <th style={{ padding: '1.25rem 1rem' }}></th>
+                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Report Context</th>
+                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Classification</th>
+                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Temporal Range</th>
+                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Integrity</th>
+                <th style={{ padding: '0.6rem 1rem' }}></th>
               </tr>
             </thead>
             <tbody>
               {paginatedReports.length > 0 ? (
                 paginatedReports.map((report) => (
-                  <tr key={report.id} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.2s' }}>
-                    <td style={{ padding: '1.25rem 1rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                       <FileText size={18} color="var(--text-secondary)" />
-                        <span style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-primary)' }}>{report.name}</span>
+                  <tr key={report.id} className="hover-high-density" style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.1s' }}>
+                    <td style={{ padding: '0.5rem 1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                       <FileText size={16} color="var(--text-muted)" />
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          <span style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--text-primary)' }}>{report.name}</span>
+                          <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>{report.id}</span>
+                        </div>
                       </div>
                     </td>
-                    <td style={{ padding: '1.25rem 1rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                      <span style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', background: 'var(--bg-light)', border: '1px solid var(--border)', fontSize: '0.75rem' }}>{report.type}</span>
+                    <td style={{ padding: '0.5rem 1rem' }}>
+                      <span style={{ padding: '0.15rem 0.4rem', borderRadius: '2px', background: 'var(--bg-light)', border: '1px solid var(--border)', fontSize: '0.6rem', fontWeight: 700, color: 'var(--text-secondary)' }}>{report.type}</span>
                     </td>
-                    <td style={{ padding: '1.25rem 1rem', fontSize: '0.875rem', color: 'var(--text-muted)' }}>{report.date}</td>
-                    <td style={{ padding: '1.25rem 1rem' }}>
-                      <span style={{ 
-                        padding: '0.375rem 0.75rem', 
-                        borderRadius: '999px', 
-                        fontSize: '0.7rem', 
-                        fontWeight: 800,
-                        background: report.status === 'ready' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(245, 158, 11, 0.1)',
-                        color: report.status === 'ready' ? 'var(--risk-low)' : 'var(--risk-medium)'
-                      }}>
-                        {report.status.toUpperCase()}
-                      </span>
+                    <td style={{ padding: '0.5rem 1rem', fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{report.date}</td>
+                    <td style={{ padding: '0.5rem 1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                        <div style={{ 
+                          width: '6px', 
+                          height: '6px', 
+                          borderRadius: '50%',
+                          backgroundColor: report.status === 'ready' ? 'var(--risk-low)' : 'var(--risk-medium)',
+                        }}></div>
+                        <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase' }}>
+                          {report.status}
+                        </span>
+                      </div>
                     </td>
-                    <td style={{ padding: '1.25rem 1rem', textAlign: 'right' }}>
-                      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
-                        <button onClick={() => handleDownload(report)} style={{ background: 'none', border: 'none', color: 'var(--primary)', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.5rem', borderRadius: 'var(--radius)' }}>
-                          <Download size={16} />
+                    <td style={{ padding: '0.5rem 1rem', textAlign: 'right' }}>
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.25rem' }}>
+                        <button onClick={() => handleDownload(report)} style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', padding: '0.4rem', borderRadius: '4px' }} className="btn-icon-hover">
+                          <Download size={14} />
                         </button>
-                        <button onClick={(e) => handleMenuOpen(e, report)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.5rem' }}>
-                          <MoreVertical size={18} />
+                        <button onClick={(e) => handleMenuOpen(e, report)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.4rem' }}>
+                          <MoreVertical size={16} />
                         </button>
                       </div>
                     </td>
@@ -238,9 +250,9 @@ export default function ReportsPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} style={{ padding: '6rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                    <FileText size={48} style={{ marginBottom: '1rem', opacity: 0.2 }} />
-                    <p style={{ fontSize: '1rem', fontWeight: 500 }}>No reports found.</p>
+                  <td colSpan={5} style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                    <FileText size={32} style={{ marginBottom: '0.75rem', opacity: 0.2 }} />
+                    <p style={{ fontSize: '0.8rem', fontWeight: 500 }}>Empty registry.</p>
                   </td>
                 </tr>
               )}
