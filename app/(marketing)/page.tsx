@@ -5,6 +5,9 @@ import Link from 'next/link';
 import gsap from 'gsap';
 import { ShieldAlert, Network, Server, PenTool } from 'lucide-react';
 
+// Prevent static prerendering — page uses useEffect/GSAP (browser-only APIs)
+export const dynamic = 'force-dynamic';
+
 export default function LandingPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
