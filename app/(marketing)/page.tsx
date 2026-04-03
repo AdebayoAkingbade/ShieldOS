@@ -1,12 +1,12 @@
 // SERVER COMPONENT — no 'use client' so route segment configs are respected
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 
 // This tells Next.js to NEVER statically prerender this route.
 // Required because the client component uses GSAP + browser-only APIs.
 export const dynamic = 'force-dynamic';
 
 // ssr: false ensures GSAP/browser code never runs during server render
-const LandingPageClient = dynamic(() => import('./LandingPageClient'), {
+const LandingPageClient = nextDynamic(() => import('./LandingPageClient'), {
   ssr: false,
   loading: () => (
     <div style={{
