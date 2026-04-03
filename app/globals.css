@@ -32,20 +32,20 @@
   --primary-hover: #1d4ed8;
   --primary-light: rgba(37, 99, 235, 0.1);
 
-  --bg-light: #F1F5F9; /* Slate 100 - Deep slate for SOC feel */
+  --bg-light: #F4F7FB; /* Cold blue-gray */
   --bg-card: #FFFFFF;
-  --bg-dark: #E2E8F0; /* Slate 200 */
-  --bg-dark-card: #F8FAFC;
+  --bg-dark: #E2E8F0;
+  --bg-dark-card: #FFFFFF;
 
   --text-primary: #0F172A;
   --text-secondary: #475569;
   --text-muted: #64748B;
 
-  --border: #CBD5E1;
+  --border: #D1D5DB;
   --border-focus: #94A3B8;
 
-  --shadow-sm: 0 1px 3px 0 rgb(15 23 42 / 0.1);
-  --shadow-md: 0 4px 6px -1px rgb(15 23 42 / 0.1);
+  --shadow-sm: none; /* Hard borders instead of shadows */
+  --shadow-md: none;
 }
 
 * {
@@ -58,6 +58,13 @@ html,
 body {
   max-width: 100%;
   overflow-x: hidden;
+}
+
+/* Slightly larger base on desktop so rem-based text stays readable */
+@media (min-width: 1024px) {
+  html {
+    font-size: 115%; /* bumps 0.6rem → ~11px, 0.75rem → ~13.8px */
+  }
 }
 
 body {
@@ -118,8 +125,8 @@ button {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1rem;
-  box-shadow: var(--shadow-sm);
+  padding: 0.75rem; /* Increased density */
+  box-shadow: none; /* Hard look */
 }
 
 .login-hero-pane {
@@ -474,47 +481,115 @@ button {
 }
 
 .hover-high-density:hover {
-  background-color: #1F2937 !important;
+  background-color: rgba(15, 23, 42, 0.03) !important;
   cursor: pointer;
 }
+
+:root[data-theme='dark'] .hover-high-density:hover {
+  background-color: #1F2937 !important;
+}
+
+/* Status-Driven UI Patterns */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.status-pill-secure {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--risk-low);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status-pill-alert {
+  background: var(--risk-high);
+  color: white;
+  border: 1px solid var(--risk-high);
+}
+
+.status-pill-processing {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--risk-medium);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.log-row-secure { border-left: 3px solid var(--risk-low); }
+.log-row-processing { border-left: 3px solid var(--risk-medium); }
+.log-row-alert { border-left: 3px solid var(--risk-high); }
 
 /* Responsiveness Helpers */
 .responsive-table-container {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
 .table-min-width {
-  min-width: 800px;
+  min-width: 640px;
+}
+
+/* ── Dashboard Outer Grid (mobile-first: 1 col → 2 col on desktop) ── */
+.dashboard-outer-grid {
+  grid-template-columns: 1fr;
+}
+
+/* Top Row: threat card beside metrics grid (mobile: stacked) */
+.top-row-grid {
+  grid-template-columns: 1fr !important;
+}
+
+/* Metrics: 2 col on mobile */
+.metrics-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+
+
+@media (min-width: 1024px) {
+  /* 2-column outer layout: main content + fixed side panel */
+  .dashboard-outer-grid {
+    grid-template-columns: 1fr 250px !important;
+  }
+
+  /* Top row: threat card (auto width) + metrics (fill) */
+  .top-row-grid {
+    grid-template-columns: auto 1fr !important;
+  }
+
+  /* 4 equal columns for metrics on desktop */
+  .metrics-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
 }
 
 @media (max-width: 768px) {
   .grid-responsive-dashboard {
     grid-template-columns: 1fr !important;
   }
-  
+
   .grid-responsive-metrics {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  
+
   .hide-on-mobile {
     display: none !important;
   }
-  
+
   .mobile-stack {
     flex-direction: column !important;
     align-items: stretch !important;
   }
-  
+
   .main-content {
-    padding: 1rem !important;
+    padding: 0.5rem !important;
   }
 }
 
-@media (max-width: 480px) {
-  .grid-responsive-metrics {
-    grid-template-columns: 1fr !important;
-  }
-}
 

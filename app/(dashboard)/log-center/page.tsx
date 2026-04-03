@@ -138,111 +138,98 @@ export default function ReportsPage() {
 
   return (
     <DashboardLayout title="Log Center & Intelligence">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }} className="mobile-stack">
-        <div>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: 600 }}>Security event logs and regulatory compliance documentation portal.</p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', gap: '1rem' }} className="mobile-stack">
+        <div style={{ flex: 1 }}>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.025em' }}>REGISTRY: EVENT LOGS & COMPLIANCE ARCHIVE</p>
         </div>
-        <div style={{ display: 'flex', gap: '0.6rem' }}>
-          <button onClick={() => setIsSearchDialogOpen(true)} className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.7rem', padding: '0.4rem 0.8rem' }}>
-            <Search size={14} />
-            <span>Search</span>
+        <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
+          <button onClick={() => setIsSearchDialogOpen(true)} className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.6rem', padding: '0.3rem 0.6rem', borderRadius: '2px' }}>
+            <Search size={12} />
+            <span>FILTER</span>
           </button>
-          <button onClick={() => setIsDialogOpen(true)} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.7rem', padding: '0.4rem 0.8rem' }}>
-            <Plus size={14} />
-            <span>Generate Report</span>
+          <button onClick={() => setIsDialogOpen(true)} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.6rem', padding: '0.3rem 0.6rem', borderRadius: '2px' }}>
+            <Plus size={12} />
+            <span>INITIATE TASK</span>
           </button>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.5rem' }} className="grid-responsive-metrics">
-        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', background: 'var(--bg-dark-card)' }}>
-          <div style={{ padding: '0.5rem', background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: '4px', width: 'fit-content' }}>
-            <BarChart3 size={18} />
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.75rem', marginBottom: '1rem' }} className="md:grid-cols-3">
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'var(--bg-dark-card)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h4 style={{ fontWeight: 900, fontSize: '0.6rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>AUTOMATION</h4>
+            <BarChart3 size={11} color="var(--primary)" />
           </div>
-          <div>
-            <h4 style={{ fontWeight: 800, fontSize: '0.75rem', color: 'var(--text-primary)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Automation</h4>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>Scheduled cadence: Weekly (Mon 08:00 UTC).</p>
-          </div>
+          <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', lineHeight: '1.4', fontWeight: 700 }}>CADENCE: WEEKLY (MON 08:00 UTC)</p>
         </div>
         
-        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', background: 'var(--bg-dark-card)' }}>
-          <div style={{ padding: '0.5rem', background: 'rgba(245, 158, 11, 0.1)', color: 'var(--risk-medium)', borderRadius: '4px', width: 'fit-content' }}>
-            <Calendar size={18} />
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'var(--bg-dark-card)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h4 style={{ fontWeight: 900, fontSize: '0.6rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>RETENTION</h4>
+            <Calendar size={11} color="var(--risk-medium)" />
           </div>
-          <div>
-            <h4 style={{ fontWeight: 800, fontSize: '0.75rem', color: 'var(--text-primary)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Retention</h4>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>Technical data persisted for 365 days.</p>
-          </div>
+          <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', lineHeight: '1.4', fontWeight: 700 }}>TTL: 365 DAYS PERSISTENCE</p>
         </div>
 
-        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', background: 'var(--bg-dark-card)' }}>
-          <div style={{ padding: '0.5rem', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--risk-low)', borderRadius: '4px', width: 'fit-content' }}>
-            <Filter size={18} />
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'var(--bg-dark-card)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h4 style={{ fontWeight: 900, fontSize: '0.6rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>AUDIT TRAIL</h4>
+            <Filter size={11} color="var(--risk-low)" />
           </div>
-          <div>
-            <h4 style={{ fontWeight: 800, fontSize: '0.75rem', color: 'var(--text-primary)', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Audit Trail</h4>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>Immutable logging active for all exports.</p>
-          </div>
+          <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', lineHeight: '1.4', fontWeight: 700 }}>INTEGRITY: IMMUTABLE LOGGING ACTIVE</p>
         </div>
       </div>
 
       <div ref={containerRef} className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-dark-card)' }}>
-        <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)', background: 'var(--bg-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <FileText size={14} /> Document Registry
+        <div style={{ padding: '0.4rem 0.75rem', borderBottom: '1px solid var(--border)', background: 'var(--bg-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <FileText size={11} /> Document Registry
           </h3>
-          <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-             Page {currentPage} of {totalPages}
+          <div style={{ fontSize: '0.55rem', color: 'var(--text-muted)', fontWeight: 800 }}>
+             PAGE {currentPage} / {totalPages}
           </div>
         </div>
         <div className="responsive-table-container">
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }} className="table-min-width">
             <thead style={{ background: 'var(--bg-light)', borderBottom: '1px solid var(--border)' }}>
               <tr>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Report Context</th>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Classification</th>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Temporal Range</th>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Integrity</th>
-                <th style={{ padding: '0.6rem 1rem' }}></th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Descriptor</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Classification</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Telemetry Data</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Status</th>
+                <th style={{ padding: '0.5rem 0.75rem' }}></th>
               </tr>
             </thead>
             <tbody>
               {paginatedReports.length > 0 ? (
                 paginatedReports.map((report) => (
-                  <tr key={report.id} className="hover-high-density" style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.1s' }}>
-                    <td style={{ padding: '0.5rem 1rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                       <FileText size={16} color="var(--text-muted)" />
+                  <tr key={report.id} className={`hover-high-density log-row-${report.status === 'ready' ? 'secure' : 'processing'}`} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.1s' }}>
+                    <td style={{ padding: '0.4rem 0.75rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                       <FileText size={14} color="var(--text-muted)" />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <span style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--text-primary)' }}>{report.name}</span>
-                          <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>{report.id}</span>
+                          <span style={{ fontWeight: 800, fontSize: '0.75rem', color: 'var(--text-primary)' }}>{report.name}</span>
+                          <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>{report.id}</span>
                         </div>
                       </div>
                     </td>
-                    <td style={{ padding: '0.5rem 1rem' }}>
-                      <span style={{ padding: '0.15rem 0.4rem', borderRadius: '2px', background: 'var(--bg-light)', border: '1px solid var(--border)', fontSize: '0.6rem', fontWeight: 700, color: 'var(--text-secondary)' }}>{report.type}</span>
+                    <td style={{ padding: '0.4rem 0.75rem' }}>
+                      <span style={{ padding: '0.15rem 0.4rem', borderRadius: '1px', background: 'var(--bg-light)', border: '1px solid var(--border)', fontSize: '0.55rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{report.type}</span>
                     </td>
-                    <td style={{ padding: '0.5rem 1rem', fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{report.date}</td>
-                    <td style={{ padding: '0.5rem 1rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                        <div style={{ 
-                          width: '6px', 
-                          height: '6px', 
-                          borderRadius: '50%',
-                          backgroundColor: report.status === 'ready' ? 'var(--risk-low)' : 'var(--risk-medium)',
-                        }}></div>
-                        <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase' }}>
-                          {report.status}
-                        </span>
-                      </div>
+                    <td style={{ padding: '0.4rem 0.75rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{report.date}</td>
+                    <td style={{ padding: '0.4rem 0.75rem' }}>
+                      <span className={`status-pill status-pill-${report.status === 'ready' ? 'secure' : 'processing'}`}>
+                        {report.status === 'generating' && <span className="status-dot animate-pulse" style={{ background: 'currentColor', width: '4px', height: '4px', position: 'static' }}></span>}
+                        {report.status === 'ready' ? 'SECURE' : 'PROCESSING'}
+                      </span>
                     </td>
-                    <td style={{ padding: '0.5rem 1rem', textAlign: 'right' }}>
-                      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.25rem' }}>
-                        <button onClick={() => handleDownload(report)} style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', padding: '0.4rem', borderRadius: '4px' }} className="btn-icon-hover">
-                          <Download size={14} />
+                    <td style={{ padding: '0.4rem 0.75rem', textAlign: 'right' }}>
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.2rem' }}>
+                        <button onClick={() => handleDownload(report)} style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', padding: '0.3rem', borderRadius: '2px' }} className="btn-icon-hover">
+                          <Download size={12} />
                         </button>
-                        <button onClick={(e) => handleMenuOpen(e, report)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.4rem' }}>
-                          <MoreVertical size={16} />
+                        <button onClick={(e) => handleMenuOpen(e, report)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '0.3rem' }}>
+                          <MoreVertical size={14} />
                         </button>
                       </div>
                     </td>
@@ -250,9 +237,9 @@ export default function ReportsPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-                    <FileText size={32} style={{ marginBottom: '0.75rem', opacity: 0.2 }} />
-                    <p style={{ fontSize: '0.8rem', fontWeight: 500 }}>Empty registry.</p>
+                  <td colSpan={5} style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+                    <FileText size={24} style={{ marginBottom: '0.5rem', opacity: 0.2 }} />
+                    <p style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase' }}>Registry Exhausted</p>
                   </td>
                 </tr>
               )}

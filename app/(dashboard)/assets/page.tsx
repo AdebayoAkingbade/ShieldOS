@@ -34,81 +34,74 @@ export default function AssetsPage() {
 
   return (
     <DashboardLayout title="Asset Inventory">
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.5rem' }} className="grid-responsive-metrics">
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.75rem', marginBottom: '1rem' }} className="md:grid-cols-3">
         <div className="card" style={{ background: 'var(--bg-dark-card)' }}>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Inventory Volume</p>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem' }}>
-            <h4 className="font-mono" style={{ fontSize: '1.5rem', fontWeight: 800 }}>{tenantAssets.length}</h4>
-            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Nodes</span>
+          <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Inventory Volume</p>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.3rem' }}>
+            <h4 className="font-mono" style={{ fontSize: '1.25rem', fontWeight: 900 }}>{tenantAssets.length}</h4>
+            <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontWeight: 700 }}>NODES</span>
           </div>
         </div>
-        <div className={`card ${tenantAssets.filter(a => a.status === 'compromised').length > 0 ? 'threat-pulse-glow threat-high-tint' : ''}`} style={{ background: 'var(--bg-dark-card)', border: tenantAssets.filter(a => a.status === 'compromised').length > 0 ? '1px solid var(--risk-high)' : '1px solid var(--border)' }}>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Infected / Compromised</p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <h4 className="font-mono" style={{ fontSize: '1.5rem', fontWeight: 800, color: tenantAssets.filter(a => a.status === 'compromised').length > 0 ? 'var(--risk-high)' : 'inherit' }}>
+        <div className={`card ${tenantAssets.filter(a => a.status === 'compromised').length > 0 ? 'threat-high-tint' : ''}`} style={{ background: 'var(--bg-dark-card)', borderLeft: tenantAssets.filter(a => a.status === 'compromised').length > 0 ? '3px solid var(--risk-high)' : '1px solid var(--border)' }}>
+          <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Infected / Compromised</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <h4 className="font-mono" style={{ fontSize: '1.25rem', fontWeight: 900, color: tenantAssets.filter(a => a.status === 'compromised').length > 0 ? 'var(--risk-high)' : 'inherit' }}>
               {tenantAssets.filter(a => a.status === 'compromised').length}
             </h4>
-            {tenantAssets.filter(a => a.status === 'compromised').length > 0 && <span className="status-dot animate-pulse" style={{ backgroundColor: 'var(--risk-high)', width: '8px', height: '8px' }}></span>}
+            {tenantAssets.filter(a => a.status === 'compromised').length > 0 && <span className="status-dot animate-pulse" style={{ backgroundColor: 'var(--risk-high)', width: '6px', height: '6px' }}></span>}
           </div>
         </div>
         <div className="card" style={{ background: 'var(--bg-dark-card)' }}>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Security Hygiene</p>
-          <h4 className="font-mono" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--risk-low)' }}>98.4%</h4>
+          <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Security Hygiene</p>
+          <h4 className="font-mono" style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--risk-low)' }}>98.4%</h4>
         </div>
       </div>
 
       <div className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-dark-card)' }}>
-        <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid var(--border)', background: 'var(--bg-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Database size={14} /> Managed Entities
+        <div style={{ padding: '0.5rem 0.75rem', borderBottom: '1px solid var(--border)', background: 'var(--bg-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 style={{ fontSize: '0.7rem', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <Database size={12} /> Managed Entities
           </h3>
-          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600 }}>Sync: Live</span>
+          <span style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontWeight: 800 }}>SYNC: LIVE</span>
         </div>
         <div className="responsive-table-container">
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }} className="table-min-width">
             <thead style={{ background: 'var(--bg-light)', borderBottom: '1px solid var(--border)' }}>
               <tr>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Asset Identifier</th>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>IP / Mesh Address</th>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Risk Score</th>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Vulns</th>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Status</th>
-                <th style={{ padding: '0.6rem 1rem', fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Last Heartbeat</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Identifier</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Mesh Address</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Risk</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Vulns</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Status</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Heartbeat</th>
               </tr>
             </thead>
             <tbody>
               {paginatedAssets.map((asset) => (
-                <tr key={asset.id} className={`hover-high-density ${asset.status === 'compromised' ? 'threat-high-tint' : ''}`} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.1s' }}>
-                  <td style={{ padding: '0.5rem 1rem' }}>
-                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                <tr key={asset.id} className={`hover-high-density log-row-${asset.status === 'compromised' ? 'alert' : 'secure'}`} style={{ borderBottom: '1px solid var(--border)', transition: 'background 0.1s' }}>
+                  <td style={{ padding: '0.4rem 0.75rem' }}>
+                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                        <span style={{ color: asset.status === 'compromised' ? 'var(--risk-high)' : 'var(--text-muted)' }}>{getIcon(asset.type)}</span>
                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                         <span style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--text-primary)' }}>{asset.name}</span>
-                         <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>ID: {asset.id}</span>
+                         <span style={{ fontWeight: 800, fontSize: '0.75rem', color: 'var(--text-primary)' }}>{asset.name}</span>
+                         <span className="font-mono" style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>{asset.id}</span>
                        </div>
                      </div>
                   </td>
-                  <td className="font-mono" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', color: 'var(--text-primary)', fontWeight: 500 }}>{asset.ipAddress}</td>
-                  <td className="font-mono" style={{ padding: '0.5rem 1rem', fontSize: '0.8rem', fontWeight: 800, color: asset.riskScore > 70 ? 'var(--risk-high)' : asset.riskScore > 30 ? 'var(--risk-medium)' : 'var(--risk-low)' }}>
+                  <td className="font-mono" style={{ padding: '0.4rem 0.75rem', fontSize: '0.7rem', color: 'var(--text-primary)', fontWeight: 600 }}>{asset.ipAddress}</td>
+                  <td className="font-mono" style={{ padding: '0.4rem 0.75rem', fontSize: '0.7rem', fontWeight: 900, color: asset.riskScore > 70 ? 'var(--risk-high)' : asset.riskScore > 30 ? 'var(--risk-medium)' : 'var(--risk-low)' }}>
                     {asset.riskScore}
                   </td>
-                  <td className="font-mono" style={{ padding: '0.5rem 1rem', fontSize: '0.75rem', color: asset.vulnerabilitiesCount > 0 ? 'var(--risk-medium)' : 'var(--text-muted)' }}>
+                  <td className="font-mono" style={{ padding: '0.4rem 0.75rem', fontSize: '0.7rem', color: asset.vulnerabilitiesCount > 0 ? 'var(--risk-medium)' : 'var(--text-muted)', fontWeight: 700 }}>
                     {asset.vulnerabilitiesCount}
                   </td>
-                  <td style={{ padding: '0.5rem 1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <div className={asset.status === 'compromised' ? 'status-dot animate-pulse' : ''} style={{ 
-                        width: '6px', 
-                        height: '6px', 
-                        borderRadius: '50%',
-                        backgroundColor: asset.status === 'compromised' ? 'var(--risk-high)' : 'var(--risk-low)',
-                      }}></div>
-                      <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--text-primary)', textTransform: 'uppercase' }}>
-                        {asset.status}
-                      </span>
-                    </div>
+                  <td style={{ padding: '0.4rem 0.75rem' }}>
+                    <span className={`status-pill status-pill-${asset.status === 'compromised' ? 'alert' : 'secure'}`}>
+                      {asset.status === 'compromised' && <span className="status-dot animate-pulse" style={{ background: 'currentColor', width: '4px', height: '4px', position: 'static' }}></span>}
+                      {asset.status}
+                    </span>
                   </td>
-                  <td style={{ padding: '0.5rem 1rem', fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                  <td style={{ padding: '0.4rem 0.75rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
                     {new Date(asset.lastSeen).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                   </td>
                 </tr>

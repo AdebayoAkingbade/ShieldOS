@@ -85,13 +85,44 @@ export function DashboardLayout({
           width: `calc(100% - ${sidebarOffset}px)`,
         }}
       >
+        <div 
+          className="system-awareness-strip"
+          style={{ 
+            background: 'var(--bg-dark)', 
+            borderBottom: '1px solid var(--border)',
+            padding: '4px 1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            fontSize: '0.65rem',
+            fontWeight: 800,
+            fontFamily: 'var(--font-mono)',
+            color: 'var(--text-muted)',
+            overflowX: 'hidden',
+            minWidth: 0
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+            <span style={{ color: 'var(--risk-low)' }}>●</span> SYSTEM STATUS: <span style={{ color: 'var(--text-primary)' }}>SECURE</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+            MONITORS: <span style={{ color: 'var(--text-primary)' }}>12</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+            SYNC: <span style={{ color: 'var(--text-primary)' }}>08:42 UTC</span>
+          </div>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+            NODE: <span style={{ color: 'var(--risk-low)' }}>OS-NX-78</span>
+          </div>
+        </div>
+
         <Header
           title={title}
           onToggleSidebar={() => setIsSidebarOpen((v) => !v)}
           showMenuButton={isMobile}
         />
 
-        <main className="main-content" style={{ padding: '1.25rem 2rem' }}>
+        <main className="main-content" style={{ padding: '1rem' }}>
           <div style={{ width: '100%', maxWidth: '1440px', margin: '0 auto' }}>
             {children}
           </div>
