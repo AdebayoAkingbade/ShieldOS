@@ -4,6 +4,7 @@ import { useAppSelector } from '@/store/hooks';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useState, useMemo } from 'react';
 import { ShieldCheck, AlertCircle, Clock, ChevronRight, Download, Share2 } from 'lucide-react';
+import { useToast } from '@/components/ui/ToastProvider';
 
 // Mock Section Data for granular compliance viewing
 const frameworkSections: Record<string, any[]> = {
@@ -31,6 +32,7 @@ const frameworkSections: Record<string, any[]> = {
 
 export default function CompliancePage() {
   const { tenant } = useAppSelector((state) => state.auth);
+  const { showToast } = useToast();
   const isNg = tenant?.slug === 'cbn-ng';
 
   const defaultFrameworks = isNg 
@@ -55,7 +57,41 @@ export default function CompliancePage() {
 
   const orgName = isNg ? 'Central Bank of Nigeria' : 'Bank of Ghana';
   const orgFullName = isNg ? 'Adebayo Bank - Nigeria' : 'Bank of Ghana'; // As per screenshot text style
-  const sectorLabel = isNg ? 'Nigeria · Financial sector · Mandatory for all commercial banks' : 'Ghana · Financial sector · Mandatory for all banks, SDIs, payment systems and fintechs';
+  const sectorLabel = isNg ? 'Nigeria . Financial sector . Mandatory for all commercial banks' : 'Ghana . Financial sector . Mandatory for all banks, SDIs, payment systems and fintechs';
+
+  const handleDownloadReport = () => {
+    showToast(`Preparing ${activeTab} compliance report...`, 'success');
+    
+    setTimeout(() => {
+      const timestamp = new Date().toLocaleString();
+      const reportContent = `--- SHIELD OS COMPLIANCE REPORT ---
+Generated: ${timestamp}
+Tenant: ${tenant?.name}
+Framework: ${activeTab}
+Overall Score: 58%
+Status: NON-COMPLIANT
+
+DETAILED STATUS:
+${sections.map(s => `[${s.id}] ${s.req} - STATUS: ${s.status.toUpperCase()} ${s.incident ? `(Linked Incident: ${s.incident})` : ''}`).join('\n')}
+
+RECOMMENDED ACTIONS:
+1. Review the regulatory incident report prepared by the SOC for the data exfiltration event.
+2. Schedule board cyber risk review before April 15.
+3. Approve SOC action to enable MFA on 14 privileged accounts.
+
+--- END OF REPORT ---`;
+
+      const blob = new Blob([reportContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${activeTab.replace(/\s+/g, '_')}_Report.txt`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }, 1000);
+  };
 
   return (
     <DashboardLayout title="Regulatory Compliance">
@@ -125,7 +161,7 @@ export default function CompliancePage() {
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0 }}>
-              {isNg ? 'Central Bank of Nigeria — Cyber Security Framework 2024' : 'Bank of Ghana — Cyber & Information Security Directive 2026'}
+              {isNg ? 'Central Bank of Nigeria - Cyber Security Framework 2024' : 'Bank of Ghana - Cyber & Information Security Directive 2026'}
             </h2>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{sectorLabel}</span>
@@ -146,8 +182,12 @@ export default function CompliancePage() {
               <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Controls Triggered</p>
               <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', margin: 0 }}>9 of 20 sections</p>
             </div>
-            <button className="btn btn-primary" style={{ padding: '0.6rem 1.25rem', fontSize: '0.8rem' }}>
-              Prepare {isNg ? 'CBN' : 'BoG'} Report →
+            <button 
+              className="btn btn-primary" 
+              style={{ padding: '0.6rem 1.25rem', fontSize: '0.8rem' }}
+              onClick={handleDownloadReport}
+            >
+              Prepare {isNg ? 'CBN' : 'BoG'} Report ->
             </button>
           </div>
         </div>
@@ -182,7 +222,7 @@ export default function CompliancePage() {
                             <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{row.date}</span>
                           </div>
                         </>
-                      ) : <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>—</span>}
+                      ) : <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>-</span>}
                     </td>
                     <td style={{ padding: '1rem 1.5rem' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: getStatusColor(row.status), fontSize: '0.75rem', fontWeight: 800 }}>
@@ -207,9 +247,9 @@ export default function CompliancePage() {
             <div style={{ display: 'flex', gap: '1rem' }}>
               <span style={{ color: 'var(--primary)', fontWeight: 900 }}>1.</span>
               <p style={{ fontSize: '0.8rem', margin: 0, color: 'var(--text-primary)' }}>
-                Review the regulatory incident report prepared by the SOC for the data exfiltration event — deadline applies.
+                Review the regulatory incident report prepared by the SOC for the data exfiltration event - deadline applies.
                 <br />
-                <span style={{ fontSize: '0.7rem', color: 'var(--risk-high)', fontWeight: 700 }}>Report ready — 13h 42m to deadline ({isNg ? 'CBN §4.3' : 'CISD §6'})</span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--risk-high)', fontWeight: 700 }}>Report ready - 13h 42m to deadline ({isNg ? 'CBN §4.3' : 'CISD §6'})</span>
               </p>
             </div>
             <div style={{ display: 'flex', gap: '1rem' }}>
@@ -217,15 +257,15 @@ export default function CompliancePage() {
               <p style={{ fontSize: '0.8rem', margin: 0, color: 'var(--text-primary)' }}>
                 Schedule board cyber risk review before April 15. Board report is ready on the Board Reports page.
                 <br />
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{isNg ? 'CBN §2.1' : 'CISD §4'} — Board governance obligation</span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{isNg ? 'CBN §2.1' : 'CISD §4'} - Board governance obligation</span>
               </p>
             </div>
             <div style={{ display: 'flex', gap: '1rem' }}>
               <span style={{ color: 'var(--primary)', fontWeight: 900 }}>3.</span>
               <p style={{ fontSize: '0.8rem', margin: 0, color: 'var(--text-primary)' }}>
-                Approve SOC action to enable MFA on 14 privileged accounts — 2 hours, no service disruption.
+                Approve SOC action to enable MFA on 14 privileged accounts - 2 hours, no service disruption.
                 <br />
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{isNg ? 'CBN Access Control' : 'CISD §9'} — Access control compliance gap</span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{isNg ? 'CBN Access Control' : 'CISD §9'} - Access control compliance gap</span>
               </p>
             </div>
           </div>

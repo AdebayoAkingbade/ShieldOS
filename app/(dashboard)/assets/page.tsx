@@ -87,7 +87,7 @@ export default function AssetsPage() {
         <div className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-dark-card)' }}>
           <div style={{ padding: '1rem', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-light)' }}>
             <h3 style={{ fontSize: '0.8rem', fontWeight: 900, textTransform: 'uppercase', margin: 0 }}>
-              {filterType ? `${filterType}s` : 'All Assets'} — {filteredAssets.length}
+              {filterType ? `${filterType}s` : 'All Assets'} - {filteredAssets.length}
             </h3>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 700 }}>
               Showing {filteredAssets.length} of {tenantAssets.length} nodes

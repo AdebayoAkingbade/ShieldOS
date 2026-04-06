@@ -49,8 +49,8 @@ export default function DashboardPage() {
   ];
 
   const bannerText = isNg 
-    ? "NDPR / CBN Framework — Mandatory reporting deadline active"
-    : "BoG CISD — Mandatory reporting deadline active";
+    ? "NDPR / CBN Framework - Mandatory reporting deadline active"
+    : "BoG CISD - Mandatory reporting deadline active";
     
   // Asset groupings
   const servers = tenantAssets.filter(a => a.type === 'server');
@@ -67,7 +67,7 @@ export default function DashboardPage() {
           <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--risk-high)', marginTop: '6px', flexShrink: 0 }} className="threat-pulse-glow" />
           <div>
             <h4 style={{ fontSize: '0.85rem', fontWeight: 800, color: '#fca5a5', margin: 0 }}>{bannerText}</h4>
-            <p style={{ fontSize: '0.75rem', color: '#fecaca', margin: 0, opacity: 0.8 }}>Core banking incident requires regulatory notification. SOC report prepared — awaiting your sign-off.</p>
+            <p style={{ fontSize: '0.75rem', color: '#fecaca', margin: 0, opacity: 0.8 }}>Core banking incident requires regulatory notification. SOC report prepared - awaiting your sign-off.</p>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
@@ -143,7 +143,7 @@ export default function DashboardPage() {
 
       {/* ── REGULATORY COMPLIANCE ── */}
       <div>
-        <h3 style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>REGULATORY COMPLIANCE — CLICK ANY FRAMEWORK FOR DETAIL</h3>
+        <h3 style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>REGULATORY COMPLIANCE - CLICK ANY FRAMEWORK FOR DETAIL</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.75rem' }}>
           {complianceData.map(c => (
             <div key={c.title} className="card" style={{ padding: '1rem', background: 'var(--bg-dark-card)' }}>
@@ -160,7 +160,7 @@ export default function DashboardPage() {
       {/* ── SOC ACTIVITY ── */}
       <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-dark-card)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-          <h3 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-primary)' }}>SOC activity — what your team has done</h3>
+          <h3 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-primary)' }}>SOC activity - what your team has done</h3>
           <Link href="/incidents" style={{ color: 'var(--primary)', fontSize: '0.7rem', fontWeight: 700, textDecoration: 'none' }}>View full activity →</Link>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -170,10 +170,10 @@ export default function DashboardPage() {
                <div>
                  <p style={{ fontSize: '0.85rem', fontWeight: 600, margin: 0, color: 'var(--text-primary)', lineHeight: 1.4 }}>{inc.title}</p>
                  <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', margin: '0.3rem 0', fontFamily: 'var(--font-mono)' }}>
-                   {new Date(inc.timestamp).toLocaleString()} — {inc.status}
+                   {new Date(inc.timestamp).toLocaleString()} - {inc.status}
                  </p>
                  {inc.severity === 'high' && i === 0 && (
-                   <span style={{ fontSize: '0.7rem', color: 'var(--primary)', fontWeight: 600, cursor: 'pointer' }}>{bannerText.split('—')[0].trim()} §14 — 13h 42m to file</span>
+                   <span style={{ fontSize: '0.7rem', color: 'var(--primary)', fontWeight: 600, cursor: 'pointer' }}>{bannerText.split('-')[0].trim()} §14 - 13h 42m to file</span>
                  )}
                </div>
              </div>
@@ -188,7 +188,7 @@ export default function DashboardPage() {
             
             <div className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-dark-card)' }}>
               <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-card)', borderBottom: '1px solid var(--border)' }}>
-                 <h4 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Servers — {servers.length}</h4>
+                 <h4 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Servers - {servers.length}</h4>
               </div>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', minWidth: '800px', borderCollapse: 'collapse', textAlign: 'left' }}>
@@ -221,7 +221,7 @@ export default function DashboardPage() {
 
             <div className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-dark-card)' }}>
               <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-card)', borderBottom: '1px solid var(--border)' }}>
-                 <h4 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Endpoints — {endpoints.length}</h4>
+                 <h4 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Endpoints - {endpoints.length}</h4>
               </div>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', minWidth: '800px', borderCollapse: 'collapse', textAlign: 'left' }}>
@@ -254,7 +254,7 @@ export default function DashboardPage() {
 
             <div className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-dark-card)' }}>
               <div style={{ padding: '0.75rem 1rem', background: 'var(--bg-card)', borderBottom: '1px solid var(--border)' }}>
-                 <h4 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Databases — {databases.length}</h4>
+                 <h4 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase' }}>Databases - {databases.length}</h4>
               </div>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', minWidth: '800px', borderCollapse: 'collapse', textAlign: 'left' }}>

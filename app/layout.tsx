@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Providers } from '@/components/Providers';
 
-// Force all pages to render dynamically — the app uses Redux + localStorage
+// Force all pages to render dynamically - the app uses Redux + localStorage
 // which cannot be serialized during static generation.
 export const dynamic = 'force-dynamic';
 

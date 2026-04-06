@@ -1,4 +1,4 @@
-// SERVER COMPONENT — no 'use client' so route segment configs are respected
+// SERVER COMPONENT - no 'use client' so route segment configs are respected
 import { LandingPageClient } from './ClientWrapper';
 
 // This tells Next.js to NEVER statically prerender this route.
