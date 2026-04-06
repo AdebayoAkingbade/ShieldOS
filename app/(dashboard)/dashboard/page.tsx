@@ -9,7 +9,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout';
 export default function DashboardPage() {
   const { tenant } = useAppSelector((state) => state.auth);
   
-  const isNg = tenant?.slug === 'cbn-ng';
+  const isNg = tenant?.slug === 'acme-bank-ng';
 
   const tenantIncidents = incidents.filter(inc => inc.tenantId === tenant?.id);
   const tenantAssets   = assets.filter(ast => ast.tenantId === tenant?.id);
@@ -35,7 +35,7 @@ export default function DashboardPage() {
   ];
 
   const complianceData = isNg ? [
-    { title: 'CBN Cyber Framework', subtitle: 'Nigeria - Financial', status: 'Non-compliant', color: 'var(--risk-high)', bg: 'rgba(239, 68, 68, 0.1)' },
+    { title: 'Acme Cyber Framework', subtitle: 'Nigeria - Financial', status: 'Non-compliant', color: 'var(--risk-high)', bg: 'rgba(239, 68, 68, 0.1)' },
     { title: 'NDPR', subtitle: 'Nigeria - All sectors', status: 'Non-compliant', color: 'var(--risk-high)', bg: 'rgba(239, 68, 68, 0.1)' },
     { title: 'NITDA', subtitle: 'Nigeria - All sectors', status: 'At risk', color: 'var(--risk-medium)', bg: 'rgba(245, 158, 11, 0.1)' },
     { title: 'ISO 27001:2022', subtitle: 'Global - All sectors', status: 'Compliant', color: 'var(--risk-low)', bg: 'rgba(16, 185, 129, 0.1)' },
@@ -49,7 +49,7 @@ export default function DashboardPage() {
   ];
 
   const bannerText = isNg 
-    ? "NDPR / CBN Framework - Mandatory reporting deadline active"
+    ? "NDPR / Acme Framework - Mandatory reporting deadline active"
     : "BoG CISD - Mandatory reporting deadline active";
     
   // Asset groupings
@@ -92,7 +92,7 @@ export default function DashboardPage() {
           <div style={{ marginTop: 'auto', borderTop: '1px solid var(--border)', paddingTop: '1rem', textAlign: 'center' }}>
             <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Est. exposure</p>
             <p style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--risk-medium)' }}>
-              {isNg ? 'NGN 900M - 1.8B' : 'GHS 12M - 24M'}
+              {isNg ? '₦900M - ₦1.8B' : 'GH₵12M - GH₵24M'}
             </p>
             <div style={{ height: '50px', width: '100%', marginTop: '0.5rem' }}>
               <ResponsiveContainer width="100%" height="100%">

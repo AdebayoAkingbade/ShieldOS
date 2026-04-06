@@ -2,7 +2,7 @@ import { Tenant, User, Incident, Asset, Report, AuditLog, ComplianceFramework, D
 
 export const tenants: Tenant[] = [
   { id: 't1', name: 'ACME Bank - Ghana', slug: 'acme-bank-gh' },
-  { id: 't2', name: 'CBN - Nigeria', slug: 'cbn-ng' },
+  { id: 't2', name: 'Acme Bank - Nigeria', slug: 'acme-bank-ng' },
 ];
 
 export const users: User[] = [
@@ -67,9 +67,10 @@ export const reports: Report[] = [
   { id: 'rep-1', name: 'Monthly Security Summary', date: 'April 2026', type: 'Executive', status: 'ready', tenantId: 't1', summary: 'Risk increased by 4% due to unresolved endpoint incidents.' },
   { id: 'rep-2', name: 'Incident Overview', date: 'April 2026', type: 'Operational', status: 'ready', tenantId: 't1', summary: 'High volume of external network scans mitigated.' },
   { id: 'rep-3', name: 'Compliance Status', date: 'April 2026', type: 'Regulatory', status: 'ready', tenantId: 't1', summary: 'BoG CISD audit checks pending 4 core failures.' },
-  { id: 'rep-4', name: 'Financial Risk Exposure', date: 'April 2026', type: 'Executive', status: 'ready', tenantId: 't1', summary: 'Est. exposure currently sits at GHS 24M due to database vulnerabilities.' },
+  { id: 'rep-4', name: 'Financial Risk Exposure', date: 'April 2026', type: 'Executive', status: 'ready', tenantId: 't1', summary: 'Est. exposure currently sits at GH₵ 24M due to database vulnerabilities.' },
   // T2
   { id: 'rep-5', name: 'Monthly Security Summary', date: 'April 2026', type: 'Executive', status: 'ready', tenantId: 't2', summary: 'Risk stable. NDPR gap analysis shows major improvements.' },
+  { id: 'rep-6', name: 'Financial Risk Exposure', date: 'April 2026', type: 'Executive', status: 'ready', tenantId: 't2', summary: 'Est. exposure currently sits at ₦1.2B due to core server vulnerabilities.' },
 ];
 
 export const auditLogs: AuditLog[] = [
@@ -86,7 +87,7 @@ export const complianceFrameworks: ComplianceFramework[] = [
   { id: 'cf-3', name: 'ISO 27001:2022', score: 95, controlsPassed: 110, controlsFailed: 5, tenantId: 't1' },
   { id: 'cf-4', name: 'PCI DSS v4.0', score: 55, controlsPassed: 140, controlsFailed: 112, tenantId: 't1' },
   // T2
-  { id: 'cf-5', name: 'CBN Cyber Framework', score: 61, controlsPassed: 92, controlsFailed: 58, tenantId: 't2' },
+  { id: 'cf-5', name: 'Acme Cyber Framework', score: 61, controlsPassed: 92, controlsFailed: 58, tenantId: 't2' },
   { id: 'cf-6', name: 'NDPR', score: 85, controlsPassed: 120, controlsFailed: 20, tenantId: 't2' },
   { id: 'cf-7', name: 'ISO 27001:2022', score: 98, controlsPassed: 112, controlsFailed: 2, tenantId: 't2' },
 ];

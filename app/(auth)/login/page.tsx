@@ -157,7 +157,7 @@ export default function LoginPage() {
       }}>
         <div style={{ maxWidth: '400px', width: '100%' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'white', marginBottom: '2.5rem' }}>
-            Ostec Identity System
+            Ostec SOC platform
           </h2>
 
           <form onSubmit={handleLogin}>

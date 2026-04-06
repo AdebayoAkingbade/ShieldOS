@@ -19,10 +19,10 @@ const frameworkSections: Record<string, any[]> = {
     { id: 'GDPA §27', req: 'Data processing register', incident: 'Unregistered third-party API detected', severity: 'HIGH', date: 'Apr 1', status: 'Triggered', action: 'Update register →' },
     { id: 'GDPA §32', req: 'Security of personal data', incident: null, severity: null, date: null, status: 'Clear', action: 'Encryption active' },
   ],
-  'CBN Cyber Framework': [
-    { id: 'CBN §2.1', req: 'Cyber Risk Governance', incident: 'Strategic plan update pending', severity: 'MED', date: 'Due Apr 10', status: 'Overdue', action: 'Review plan →' },
-    { id: 'CBN §4.3', req: 'Incident Response Reporting', incident: 'Unauthorized access attempt', severity: 'HIGH', date: 'Apr 4', status: 'Triggered', action: 'File report →' },
-    { id: 'CBN §5.8', req: 'Digital Literacy Training', incident: null, severity: null, date: null, status: 'Clear', action: '85% complete' },
+  'Acme Cyber Framework': [
+    { id: 'ACME §2.1', req: 'Cyber Risk Governance', incident: 'Strategic plan update pending', severity: 'MED', date: 'Due Apr 10', status: 'Overdue', action: 'Review plan ->' },
+    { id: 'ACME §4.3', req: 'Incident Response Reporting', incident: 'Unauthorized access attempt', severity: 'HIGH', date: 'Apr 4', status: 'Triggered', action: 'File report ->' },
+    { id: 'ACME §5.8', req: 'Digital Literacy Training', incident: null, severity: null, date: null, status: 'Clear', action: '85% complete' },
   ],
   'NDPR': [
     { id: 'NDPR 2.10', req: 'Data Protection Audit', incident: 'Annual audit report pending', severity: 'HIGH', date: 'Due Mar 31', status: 'Overdue', action: 'Finalize report →' },
@@ -33,10 +33,10 @@ const frameworkSections: Record<string, any[]> = {
 export default function CompliancePage() {
   const { tenant } = useAppSelector((state) => state.auth);
   const { showToast } = useToast();
-  const isNg = tenant?.slug === 'cbn-ng';
+  const isNg = tenant?.slug === 'acme-bank-ng';
 
   const defaultFrameworks = isNg 
-    ? ['CBN Cyber Framework', 'NDPR', 'NITDA', 'ISO 27001:2022', 'PCI DSS v4.0']
+    ? ['Acme Cyber Framework', 'NDPR', 'NITDA', 'ISO 27001:2022', 'PCI DSS v4.0']
     : ['BoG CISD 2026', 'Ghana Data Protection', 'Ghana CSA', 'ISO 27001:2022', 'PCI DSS v4.0'];
 
   const [activeTab, setActiveTab] = useState(defaultFrameworks[0]);
@@ -55,8 +55,8 @@ export default function CompliancePage() {
     }
   };
 
-  const orgName = isNg ? 'Central Bank of Nigeria' : 'Bank of Ghana';
-  const orgFullName = isNg ? 'Adebayo Bank - Nigeria' : 'Bank of Ghana'; // As per screenshot text style
+  const orgName = isNg ? 'Acme Bank - Nigeria' : 'Bank of Ghana';
+  const orgFullName = isNg ? 'Acme Bank - Nigeria' : 'Bank of Ghana'; // As per screenshot text style
   const sectorLabel = isNg ? 'Nigeria . Financial sector . Mandatory for all commercial banks' : 'Ghana . Financial sector . Mandatory for all banks, SDIs, payment systems and fintechs';
 
   const handleDownloadReport = () => {
@@ -161,7 +161,7 @@ RECOMMENDED ACTIONS:
         }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0 }}>
-              {isNg ? 'Central Bank of Nigeria - Cyber Security Framework 2024' : 'Bank of Ghana - Cyber & Information Security Directive 2026'}
+              {isNg ? 'Acme Bank - Nigeria - Cyber Security Framework 2026' : 'Bank of Ghana - Cyber & Information Security Directive 2026'}
             </h2>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{sectorLabel}</span>
@@ -187,7 +187,7 @@ RECOMMENDED ACTIONS:
               style={{ padding: '0.6rem 1.25rem', fontSize: '0.8rem' }}
               onClick={handleDownloadReport}
             >
-              Prepare {isNg ? 'CBN' : 'BoG'} Report {'->'}
+              Prepare {isNg ? 'Acme' : 'BoG'} Report {'->'}
             </button>
           </div>
         </div>
@@ -249,7 +249,7 @@ RECOMMENDED ACTIONS:
               <p style={{ fontSize: '0.8rem', margin: 0, color: 'var(--text-primary)' }}>
                 Review the regulatory incident report prepared by the SOC for the data exfiltration event - deadline applies.
                 <br />
-                <span style={{ fontSize: '0.7rem', color: 'var(--risk-high)', fontWeight: 700 }}>Report ready - 13h 42m to deadline ({isNg ? 'CBN §4.3' : 'CISD §6'})</span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--risk-high)', fontWeight: 700 }}>Report ready - 13h 42m to deadline ({isNg ? 'ACME §4.3' : 'CISD §6'})</span>
               </p>
             </div>
             <div style={{ display: 'flex', gap: '1rem' }}>
@@ -257,7 +257,7 @@ RECOMMENDED ACTIONS:
               <p style={{ fontSize: '0.8rem', margin: 0, color: 'var(--text-primary)' }}>
                 Schedule board cyber risk review before April 15. Board report is ready on the Board Reports page.
                 <br />
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{isNg ? 'CBN §2.1' : 'CISD §4'} - Board governance obligation</span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{isNg ? 'ACME §2.1' : 'CISD §4'} - Board governance obligation</span>
               </p>
             </div>
             <div style={{ display: 'flex', gap: '1rem' }}>
@@ -265,7 +265,7 @@ RECOMMENDED ACTIONS:
               <p style={{ fontSize: '0.8rem', margin: 0, color: 'var(--text-primary)' }}>
                 Approve SOC action to enable MFA on 14 privileged accounts - 2 hours, no service disruption.
                 <br />
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{isNg ? 'CBN Access Control' : 'CISD §9'} - Access control compliance gap</span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{isNg ? 'Acme Access Control' : 'CISD §9'} - Access control compliance gap</span>
               </p>
             </div>
           </div>

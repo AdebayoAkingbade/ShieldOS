@@ -237,7 +237,7 @@ export default function RegulatoryPage() {
               <MenuItem value="NDPR">NDPR (Nigeria)</MenuItem>
               <MenuItem value="BoG CISD">BoG CISD (Ghana)</MenuItem>
               <MenuItem value="Data Protection Commission">Data Protection Commission</MenuItem>
-              <MenuItem value="CBN">Central Bank of Nigeria</MenuItem>
+              <MenuItem value="Acme Bank - Nigeria">Acme Bank - Nigeria</MenuItem>
             </Select>
           </div>
         </DialogContent>

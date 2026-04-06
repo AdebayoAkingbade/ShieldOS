@@ -15,7 +15,7 @@ export function Header({ title, onToggleSidebar, showMenuButton }: HeaderProps) 
   const { theme, toggleTheme } = useTheme();
 
   const getSectorAndDate = () => {
-    const isNg = tenant?.slug === 'cbn-ng';
+    const isNg = tenant?.slug === 'acme-bank-ng';
     const sector = isNg ? 'Government' : 'Financial sector';
     const date = 'April 2026';
     return `${tenant?.name} - ${sector} - ${date}`;
