@@ -21,7 +21,7 @@ export default function NotFound() {
         </div>
       </main>
       <footer style={{ padding: '2rem 4rem', borderTop: '1px solid var(--border)', textAlign: 'center', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-        &copy; 2024 ShieldOS Inc. If you think this is a mistake, contact support.
+        &copy; 2026 Ostec Inc. If you think this is a mistake, contact support.
       </footer>
     </div>
   );

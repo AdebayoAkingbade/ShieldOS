@@ -100,21 +100,25 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoggingIn(true);
     setError('');
 
-    // Hardcode fallback mock user just in case auth logic changed
-    const fallbackUser = users[0];
-    const user = users.find(u => u.email === email) || fallbackUser; // Auto-fallback for demo
-    const tenant = tenants.find(t => t.id === user.tenantId) || tenants[0];
-    
-    dispatch(login({ user, tenant }));
-    router.push('/dashboard');
+    // Simulate high-fidelity connection established
+    setTimeout(() => {
+      const fallbackUser = users[0];
+      const user = users.find(u => u.email === email) || fallbackUser;
+      const tenant = tenants.find(t => t.id === user.tenantId) || tenants[0];
+      
+      dispatch(login({ user, tenant }));
+      router.push('/dashboard');
+    }, 1200);
   };
 
   return (
@@ -219,23 +223,45 @@ export default function LoginPage() {
               <a href="#" style={{ fontSize: '0.75rem', color: '#3B82F6', textDecoration: 'none' }}>Don't remember your password?</a>
             </div>
 
-            <button type="submit" style={{ 
-              width: '100%', 
-              padding: '0.75rem', 
-              background: '#0ea5e9', 
-              color: 'white',
-              border: 'none',
-              fontSize: '0.875rem', 
-              fontWeight: 600,
-              cursor: 'pointer',
-              borderRadius: '2px',
-              transition: 'background 0.2s'
-            }}
-            onMouseOver={(e) => e.currentTarget.style.background = '#0284c7'}
-            onMouseOut={(e) => e.currentTarget.style.background = '#0ea5e9'}
+            <button 
+              type="submit" 
+              disabled={isLoggingIn}
+              style={{ 
+                width: '100%', 
+                padding: '0.75rem', 
+                background: isLoggingIn ? '#0284c7' : '#0ea5e9', 
+                color: 'white',
+                border: 'none',
+                fontSize: '0.875rem', 
+                fontWeight: 600,
+                cursor: isLoggingIn ? 'not-allowed' : 'pointer',
+                borderRadius: '2px',
+                transition: 'background 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.75rem'
+              }}
+              onMouseOver={(e) => { if (!isLoggingIn) e.currentTarget.style.background = '#0284c7'; }}
+              onMouseOut={(e) => { if (!isLoggingIn) e.currentTarget.style.background = '#0ea5e9'; }}
             >
-              Log In
+              {isLoggingIn ? (
+                <>
+                  <div style={{
+                    width: '18px',
+                    height: '18px',
+                    border: '2px solid rgba(255,255,255,0.3)',
+                    borderTopColor: 'white',
+                    borderRadius: '50%',
+                    animation: 'spin 0.8s linear infinite'
+                  }} />
+                  Establishing Secure Connection...
+                </>
+              ) : 'Log In'}
             </button>
+            <style dangerouslySetInnerHTML={{ __html: `
+              @keyframes spin { to { transform: rotate(360deg); } }
+            `}} />
           </form>
         </div>
       </div>

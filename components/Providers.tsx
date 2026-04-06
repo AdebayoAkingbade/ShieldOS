@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '@/store';
 import { ToastProvider } from '@/components/ui/ToastProvider';
+import { GlobalLoader } from '@/components/ui/GlobalLoader';
 
 type ThemeMode = 'dark' | 'light';
 
@@ -48,6 +49,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         }}
       >
         <ToastProvider>
+          <GlobalLoader />
           {children}
         </ToastProvider>
       </ThemeContext.Provider>

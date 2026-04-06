@@ -63,8 +63,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             background: severity === 'error' ? 'var(--risk-high)' : 
                        severity === 'warning' ? 'var(--risk-medium)' : 
                        severity === 'success' ? '#10B981' : 'var(--bg-card)',
-            color: 'white',
-            border: severity === 'info' ? '1px solid var(--primary)' : 'none',
+            color: severity === 'info' ? 'var(--text-primary)' : 'white',
+            border: severity === 'info' ? '1px solid var(--border)' : 'none',
             boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.5)'
           }}
         >

@@ -35,13 +35,15 @@ export interface Incident {
 export interface Asset {
   id: string;
   name: string;
-  type: 'endpoint' | 'server' | 'network' | 'cloud';
+  type: 'endpoint' | 'server' | 'network' | 'cloud' | 'database';
   ipAddress: string;
-  status: 'active' | 'inactive' | 'compromised';
+  status: 'active' | 'inactive' | 'compromised' | 'offline' | 'degraded';
   riskScore: number;
   vulnerabilitiesCount: number;
   lastSeen: string;
   tenantId: string;
+  criticality: 'High' | 'Medium' | 'Low';
+  sourceTool: string;
 }
 
 export interface Report {
@@ -51,6 +53,7 @@ export interface Report {
   type: string;
   status: string;
   tenantId: string;
+  summary?: string;
 }
 
 export interface AuthState {
@@ -58,5 +61,46 @@ export interface AuthState {
   tenant: Tenant | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  isGlobalLoading: boolean;
+  viewedPaths: string[];
   registeredUsers: User[];
+}
+
+export interface AuditLog {
+  id: string;
+  action: string;
+  category: 'Login' | 'Config' | 'Incident' | 'Node Isolation';
+  user: string;
+  timestamp: string;
+  severity: Severity;
+  details: string;
+  tenantId: string;
+}
+
+export interface ComplianceFramework {
+  id: string;
+  name: string;
+  score: number;
+  controlsPassed: number;
+  controlsFailed: number;
+  tenantId: string;
+}
+
+export interface DepartmentRisk {
+  id: string;
+  department: string;
+  exposureScore: number;
+  criticalAssets: number;
+  tenantId: string;
+}
+
+export interface RegulatoryFiling {
+  id: string;
+  reportName: string;
+  framework: string;
+  deadline: string;
+  status: 'Draft' | 'Under review' | 'Submitted';
+  incidentsLinked: string[];
+  tenantId: string;
+  progress: number;
 }

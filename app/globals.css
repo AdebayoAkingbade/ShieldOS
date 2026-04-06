@@ -32,19 +32,19 @@
   --primary-hover: #1d4ed8;
   --primary-light: rgba(37, 99, 235, 0.1);
 
-  --bg-light: #F4F7FB; /* Cold blue-gray */
-  --bg-card: #FFFFFF;
-  --bg-dark: #E2E8F0;
-  --bg-dark-card: #FFFFFF;
+  --bg-light: #E2E8F0; /* Slate 200 - tech gray base */
+  --bg-card: #F8FAFC; /* Slate 50 - crisp card */
+  --bg-dark: #CBD5E1; /* Slate 300 - elevated dark */
+  --bg-dark-card: #F1F5F9; /* Slate 100 - inner panels */
 
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #64748B;
+  --text-primary: #0F172A; /* Slate 900 */
+  --text-secondary: #334155; /* Slate 700 */
+  --text-muted: #475569; /* Slate 600 */
 
-  --border: #D1D5DB;
-  --border-focus: #94A3B8;
+  --border: #94A3B8; /* Slate 400 - strong border for sharp look */
+  --border-focus: #475569;
 
-  --shadow-sm: none; /* Hard borders instead of shadows */
+  --shadow-sm: none;
   --shadow-md: none;
 }
 
