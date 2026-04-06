@@ -13,7 +13,7 @@ export function DashboardLayout({
   children: React.ReactNode;
   title: string;
 }) {
-  const { isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, isLoading, isGlobalLoading } = useAppSelector((state) => state.auth);
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -57,7 +57,26 @@ export function DashboardLayout({
   const sidebarOffset = isMobile ? 0 : 76;
 
   return (
-    <div className="layout-shell" style={{ minHeight: '100vh', background: 'var(--bg-light)' }}>
+    <div className="layout-shell" style={{ minHeight: '100vh', background: 'var(--bg-light)', position: 'relative' }}>
+      {isGlobalLoading && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '3px',
+          background: 'var(--primary)',
+          zIndex: 1000,
+          animation: 'loading-bar 1s infinite linear'
+        }}>
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes loading-bar { 
+              0% { transform: translateX(-100%); } 
+              100% { transform: translateX(100%); } 
+            }
+          `}} />
+        </div>
+      )}
       <Sidebar
         open={isMobile ? isSidebarOpen : true}
         isMobile={isMobile}

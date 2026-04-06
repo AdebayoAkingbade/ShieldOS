@@ -187,7 +187,7 @@ RECOMMENDED ACTIONS:
               style={{ padding: '0.6rem 1.25rem', fontSize: '0.8rem' }}
               onClick={handleDownloadReport}
             >
-              Prepare {isNg ? 'CBN' : 'BoG'} Report ->
+              Prepare {isNg ? 'CBN' : 'BoG'} Report {'->'}
             </button>
           </div>
         </div>
