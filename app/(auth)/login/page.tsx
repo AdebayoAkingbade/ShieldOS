@@ -101,7 +101,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  
+
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -115,7 +115,7 @@ export default function LoginPage() {
       const fallbackUser = users[0];
       const user = users.find(u => u.email === email) || fallbackUser;
       const tenant = tenants.find(t => t.id === user.tenantId) || tenants[0];
-      
+
       dispatch(login({ user, tenant }));
       router.push('/dashboard');
     }, 1200);
@@ -142,7 +142,7 @@ export default function LoginPage() {
             <img src="/logo.svg" alt="Ostec Logo" style={{ height: '40px', filter: 'brightness(0) invert(1)' }} />
           </Link>
         </div>
-        
+
         <CyberAura />
       </div>
 
@@ -157,7 +157,7 @@ export default function LoginPage() {
       }}>
         <div style={{ maxWidth: '400px', width: '100%' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'white', marginBottom: '2.5rem' }}>
-            Ostec SOC platform
+            Ostec SOC Platform
           </h2>
 
           <form onSubmit={handleLogin}>
@@ -171,8 +171,8 @@ export default function LoginPage() {
               <label style={{ display: 'block', fontSize: '0.75rem', color: '#94A3B8', marginBottom: '0.5rem' }}>
                 Email
               </label>
-              <input 
-                type="email" 
+              <input
+                type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -197,8 +197,8 @@ export default function LoginPage() {
               <label style={{ display: 'block', fontSize: '0.75rem', color: '#94A3B8', marginBottom: '0.5rem' }}>
                 Password
               </label>
-              <input 
-                type="password" 
+              <input
+                type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -223,16 +223,16 @@ export default function LoginPage() {
               <a href="#" style={{ fontSize: '0.75rem', color: '#3B82F6', textDecoration: 'none' }}>Don't remember your password?</a>
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={isLoggingIn}
-              style={{ 
-                width: '100%', 
-                padding: '0.75rem', 
-                background: isLoggingIn ? '#0284c7' : '#0ea5e9', 
+              style={{
+                width: '100%',
+                padding: '0.75rem',
+                background: isLoggingIn ? '#0284c7' : '#0ea5e9',
                 color: 'white',
                 border: 'none',
-                fontSize: '0.875rem', 
+                fontSize: '0.875rem',
                 fontWeight: 600,
                 cursor: isLoggingIn ? 'not-allowed' : 'pointer',
                 borderRadius: '2px',
@@ -255,11 +255,12 @@ export default function LoginPage() {
                     borderRadius: '50%',
                     animation: 'spin 0.8s linear infinite'
                   }} />
-                  Establishing Secure Connection...
+                  Securely Connecting...
                 </>
               ) : 'Log In'}
             </button>
-            <style dangerouslySetInnerHTML={{ __html: `
+            <style dangerouslySetInnerHTML={{
+              __html: `
               @keyframes spin { to { transform: rotate(360deg); } }
             `}} />
           </form>
