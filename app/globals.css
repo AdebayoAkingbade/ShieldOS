@@ -60,10 +60,10 @@ body {
   overflow-x: hidden;
 }
 
-/* Slightly larger base on desktop so rem-based text stays readable */
+/* More compact base on desktop for high-density UI */
 @media (min-width: 1024px) {
   html {
-    font-size: 115%; /* bumps 0.6rem → ~11px, 0.75rem → ~13.8px */
+    font-size: 90%; /* bumps 0.6rem → ~8.6px, 0.75rem → ~10.8px */
   }
 }
 
