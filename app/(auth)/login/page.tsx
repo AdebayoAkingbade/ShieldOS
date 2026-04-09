@@ -156,6 +156,9 @@ export default function LoginPage() {
         borderLeft: '1px solid rgba(255,255,255,0.05)'
       }}>
         <div style={{ maxWidth: '400px', width: '100%' }}>
+          <div className="login-mobile-logo" style={{ marginBottom: '2rem' }}>
+            <img src="/logo.svg" alt="Ostec Logo" style={{ height: '36px', filter: 'brightness(0) invert(1)' }} />
+          </div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'white', marginBottom: '2.5rem' }}>
             Ostec SOC Platform
           </h2>

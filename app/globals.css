@@ -60,11 +60,8 @@ body {
   overflow-x: hidden;
 }
 
-/* More compact base on desktop for high-density UI */
-@media (min-width: 1024px) {
-  html {
-    font-size: 90%; /* bumps 0.6rem → ~8.6px, 0.75rem → ~10.8px */
-  }
+html {
+  font-size: 14px; /* Crisp base size for a high-density dashboard */
 }
 
 body {
@@ -73,6 +70,8 @@ body {
   font-family: var(--font-sans);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -133,9 +132,16 @@ button {
   display: none;
 }
 
+.login-mobile-logo {
+  display: block;
+}
+
 @media (min-width: 768px) {
   .login-hero-pane {
     display: block;
+  }
+  .login-mobile-logo {
+    display: none;
   }
 }
 
