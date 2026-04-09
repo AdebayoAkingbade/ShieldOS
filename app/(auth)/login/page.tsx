@@ -126,7 +126,7 @@ export default function LoginPage() {
       minHeight: '100vh',
       display: 'flex',
       background: '#040914', // Very dark blue/black
-      overflow: 'hidden'
+      overflowX: 'hidden'
     }}>
       {/* LEFT PANE - Cyber Art */}
       <div
@@ -139,7 +139,7 @@ export default function LoginPage() {
         {/* Logo at top left */}
         <div style={{ position: 'absolute', top: '3rem', left: '3rem', zIndex: 10 }}>
           <Link href="/" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', display: 'flex', alignItems: 'center', gap: '0.5rem', letterSpacing: '0.05em' }}>
-            <img src="/logo.svg" alt="Ostec Logo" style={{ height: '40px', filter: 'brightness(0) invert(1)' }} />
+            <img src="/logo.svg" alt="Ostec Logo" style={{ height: '40px' }} />
           </Link>
         </div>
 
@@ -157,7 +157,7 @@ export default function LoginPage() {
       }}>
         <div style={{ maxWidth: '400px', width: '100%' }}>
           <div className="login-mobile-logo" style={{ marginBottom: '2rem' }}>
-            <img src="/logo.svg" alt="Ostec Logo" style={{ height: '36px', filter: 'brightness(0) invert(1)' }} />
+            <img src="/logo.svg" alt="Ostec Logo" style={{ height: '36px' }} />
           </div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'white', marginBottom: '2.5rem' }}>
             Ostec SOC Platform
