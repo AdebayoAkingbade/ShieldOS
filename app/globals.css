@@ -1,48 +1,48 @@
 :root {
-  --primary: #3B82F6;
-  --primary-hover: #60A5FA;
-  --primary-light: rgba(59, 130, 246, 0.15);
+  --primary: #0073E7;
+  --primary-hover: #005BB8;
+  --primary-light: rgba(0, 115, 231, 0.15);
   
-  --bg-light: #0B1120;
-  --bg-card: #0F172A;
-  --bg-dark: #020617;
-  --bg-dark-card: #0F172A;
+  --bg-light: #0B0F13;
+  --bg-card: #171D22;
+  --bg-dark: #000000;
+  --bg-dark-card: #171D22;
   
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
-  --text-muted: #475569;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B5C1CA;
+  --text-muted: #7E8A94;
   
-  --border: #1E293B;
-  --border-focus: #334155;
+  --border: #2A353F;
+  --border-focus: #4F5A65;
   
-  --risk-high: #EF4444;
-  --risk-medium: #F59E0B;
-  --risk-low: #10B981;
+  --risk-high: #D93F3C;
+  --risk-medium: #F58220;
+  --risk-low: #65A637;
   
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --shadow-sm: none;
+  --shadow-md: none;
   
-  --radius: 4px;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+  --radius: 3px;
+  --font-sans: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'Roboto Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
 }
 
 :root[data-theme='light'] {
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --primary-light: rgba(37, 99, 235, 0.1);
+  --primary: #0073E7;
+  --primary-hover: #005BB8;
+  --primary-light: rgba(0, 115, 231, 0.1);
 
-  --bg-light: #E2E8F0; /* Slate 200 - tech gray base */
-  --bg-card: #F8FAFC; /* Slate 50 - crisp card */
-  --bg-dark: #CBD5E1; /* Slate 300 - elevated dark */
-  --bg-dark-card: #F1F5F9; /* Slate 100 - inner panels */
+  --bg-light: #F2F4F5;
+  --bg-card: #FFFFFF;
+  --bg-dark: #E4E7E9;
+  --bg-dark-card: #F9FAFB;
 
-  --text-primary: #0F172A; /* Slate 900 */
-  --text-secondary: #334155; /* Slate 700 */
-  --text-muted: #475569; /* Slate 600 */
+  --text-primary: #212830;
+  --text-secondary: #5C6773;
+  --text-muted: #8B97A3;
 
-  --border: #94A3B8; /* Slate 400 - strong border for sharp look */
-  --border-focus: #475569;
+  --border: #D4D8DB;
+  --border-focus: #A4AEB7;
 
   --shadow-sm: none;
   --shadow-md: none;
@@ -123,8 +123,9 @@ button {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 0.75rem; /* Increased density */
+  padding: 1.25rem; /* Increased padding relative to the original .75rem */
   box-shadow: none; /* Hard look */
+  margin-bottom: 0.5rem;
 }
 
 .login-hero-pane {
