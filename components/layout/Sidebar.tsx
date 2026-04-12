@@ -90,6 +90,8 @@ export function Sidebar({ open, isMobile, onClose }: { open: boolean; isMobile: 
       {items.map((item) => {
         const isActive = pathname.startsWith(item.href) || (pathname === '/' && item.href === '/dashboard');
         const Icon = item.icon;
+        const navColor = isActive ? 'var(--text-primary)' : 'var(--text-secondary)';
+        const navBackground = isActive ? 'rgba(59, 130, 246, 0.08)' : 'transparent';
 
         return (
           <Link
@@ -98,37 +100,39 @@ export function Sidebar({ open, isMobile, onClose }: { open: boolean; isMobile: 
             style={{
               display: 'flex',
               alignItems: 'center',
-              padding: '0.75rem 1rem',
+              padding: '0.7rem 0.85rem',
               borderRadius: 'var(--radius)',
-              color: isActive ? 'var(--primary)' : 'var(--text-secondary)',
-              background: isActive ? 'var(--primary-light)' : 'transparent',
-              fontWeight: isActive ? 600 : 400,
-              marginBottom: '0.5rem',
+              color: navColor,
+              background: navBackground,
+              fontWeight: isActive ? 500 : 400,
+              marginBottom: '0.35rem',
               position: 'relative',
               transition: 'all 0.2s',
+              border: isActive ? '1px solid rgba(59, 130, 246, 0.14)' : '1px solid transparent',
+              fontSize: '0.875rem',
             }}
             className="nav-link sidebar-link"
             onClick={() => handleNavClick(item.href)}
           >
             <span className="sidebar-link-icon" style={{ position: 'relative' }}>
-              <Icon size={20} />
+              <Icon size={18} />
               {item.badge && (
                 <span className="sidebar-badge-icon" style={{
-                  position: 'absolute', top: -6, right: -6, background: 'var(--risk-high)', color: 'white', fontSize: '0.55rem', fontWeight: 900, minWidth: 14, height: 14, borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'opacity 0.2s'
+                  position: 'absolute', top: -5, right: -5, background: 'var(--risk-high)', color: 'white', fontSize: '0.625rem', fontWeight: 800, minWidth: 15, height: 15, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'opacity 0.2s'
                 }}>
                   {item.badge}
                 </span>
               )}
             </span>
-            <span className="sidebar-link-label" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '0.5rem' }}>
-              <span>{item.name}</span>
+            <span className="sidebar-link-label" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '0.6rem' }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: isActive ? 600 : 500 }}>{item.name}</span>
               {item.badge && (
-                <span className="sidebar-badge-text" style={{ background: 'var(--risk-high)', color: 'white', fontSize: '0.55rem', fontWeight: 900, padding: '0.1rem 0.4rem', borderRadius: 10, display: 'none', transition: 'display 0.2s' }}>
+                <span className="sidebar-badge-text" style={{ background: 'rgba(239, 68, 68, 0.14)', color: 'var(--risk-high)', fontSize: '0.7rem', fontWeight: 800, padding: '0.12rem 0.42rem', borderRadius: 10, display: 'none', transition: 'display 0.2s' }}>
                   {item.badge}
                 </span>
               )}
             </span>
-            {isActive && <ChevronRight className="sidebar-link-chevron" size={16} />}
+            {isActive && <ChevronRight className="sidebar-link-chevron" size={14} />}
           </Link>
         );
       })}
