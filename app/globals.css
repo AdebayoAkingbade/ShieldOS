@@ -666,7 +666,7 @@ button {
 }
 
 .dashboard-metric-card {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   justify-content: space-between;
   padding: 1.8rem 1.9rem;
