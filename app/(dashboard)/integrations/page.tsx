@@ -117,7 +117,7 @@ export default function IntegrationsPage() {
                <div style={{ width: '48px', height: '48px', borderRadius: 'var(--radius)', background: 'var(--bg-light)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                  <Zap size={24} color={int.status === 'connected' ? 'var(--primary)' : int.status === 'paused' ? 'var(--risk-medium)' : 'var(--text-muted)'} />
                </div>
-               <div style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, background: int.status === 'connected' ? 'rgba(16, 185, 129, 0.1)' : int.status === 'paused' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(148, 163, 184, 0.1)', color: int.status === 'connected' ? 'var(--risk-low)' : int.status === 'paused' ? 'var(--risk-medium)' : 'var(--text-muted)' }}>
+               <div style={{ padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 600, background: int.status === 'connected' ? 'rgba(59, 130, 246, 0.12)' : int.status === 'paused' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(148, 163, 184, 0.1)', color: int.status === 'connected' ? 'var(--risk-low)' : int.status === 'paused' ? 'var(--risk-medium)' : 'var(--text-muted)' }}>
                  {int.status.toUpperCase()}
                </div>
             </div>
@@ -184,7 +184,7 @@ export default function IntegrationsPage() {
           </div>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Webhook Endpoint</label>
-            <input type="text" defaultValue="https://api.ostec.local/webhook/receiver" style={{ width: '100%', padding: '0.75rem', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', cursor: 'not-allowed' }} disabled />
+            <input type="text" defaultValue="https://api.ostec.local/webhook/receiver" style={{ width: '100%', padding: '0.75rem', background: 'var(--surface-hover)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', cursor: 'not-allowed' }} disabled />
           </div>
         </DialogContent>
         <DialogActions style={{ borderTop: '1px solid var(--border)', padding: '1rem' }}>

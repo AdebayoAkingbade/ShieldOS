@@ -122,7 +122,7 @@ export default function RegulatoryPage() {
                  >
                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
                      <div>
-                       <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--primary)', textTransform: 'uppercase' }}>{filing.framework}</span>
+                       <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--primary)', textTransform: 'uppercase' }}>{filing.framework}</span>
                        <h4 style={{ fontSize: '1rem', fontWeight: 800, margin: '0.25rem 0' }}>{filing.reportName}</h4>
                      </div>
                      <span className="badge" style={{ background: 'var(--bg-light)', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
@@ -143,7 +143,7 @@ export default function RegulatoryPage() {
 
                    {listLinkedIncident && (
                      <div style={{ marginTop: '1rem', padding: '0.75rem', background: 'var(--bg-light)', borderRadius: '4px', border: '1px dashed var(--border)' }}>
-                       <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, marginBottom: '0.25rem' }}>AUTO-POPULATED FROM INCIDENT</p>
+                       <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, marginBottom: '0.25rem' }}>AUTO-POPULATED FROM INCIDENT</p>
                        <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-primary)' }}>{listLinkedIncident.title}</p>
                      </div>
                    )}
@@ -163,11 +163,11 @@ export default function RegulatoryPage() {
                  <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                        <div>
-                         <label style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>Date of Discovery</label>
+                         <label style={{ fontSize: '0.8125rem', fontWeight: 800, color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>Date of Discovery</label>
                          <input type="text" value={new Date().toISOString().split('T')[0]} readOnly style={{ width: '100%', padding: '0.75rem', background: 'var(--bg-light)', border: '1px solid var(--border)', borderRadius: '4px', color: 'var(--text-primary)', cursor: 'not-allowed' }} />
                        </div>
                        <div>
-                         <label style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>Affected Data Categories</label>
+                         <label style={{ fontSize: '0.8125rem', fontWeight: 800, color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>Affected Data Categories</label>
                          <div style={{ display: 'flex', gap: '0.5rem' }}>
                            <span className="badge" style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--risk-high)' }}>PII</span>
                            <span className="badge" style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--risk-high)' }}>Financial</span>
@@ -176,7 +176,7 @@ export default function RegulatoryPage() {
                     </div>
 
                     <div>
-                       <label style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>Incident Summary (Generated from SOC Logs)</label>
+                       <label style={{ fontSize: '0.8125rem', fontWeight: 800, color: 'var(--text-muted)', display: 'block', marginBottom: '0.5rem' }}>Incident Summary (Generated from SOC Logs)</label>
                        <textarea 
                           readOnly={(selectedFiling.status === 'Submitted')} 
                           rows={4} 
@@ -185,7 +185,7 @@ export default function RegulatoryPage() {
                         />
                     </div>
                     
-                    <div style={{ marginTop: 'auto', padding: '1rem', background: selectedFiling.status === 'Draft' ? 'rgba(59, 130, 246, 0.05)' : 'rgba(16, 185, 129, 0.05)', border: selectedFiling.status === 'Draft' ? '1px solid var(--primary)' : '1px solid var(--risk-low)', borderRadius: '4px', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    <div style={{ marginTop: 'auto', padding: '1rem', background: selectedFiling.status === 'Draft' ? 'rgba(59, 130, 246, 0.08)' : 'rgba(59, 130, 246, 0.12)', border: selectedFiling.status === 'Draft' ? '1px solid var(--primary)' : '1px solid var(--risk-low)', borderRadius: '4px', display: 'flex', gap: '1rem', alignItems: 'center' }}>
                        {selectedFiling.status === 'Draft' ? (
                          <>
                            <AlertOctagon size={24} color="var(--primary)" />

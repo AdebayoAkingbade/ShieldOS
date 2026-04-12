@@ -113,7 +113,7 @@ export function DashboardLayout({
             display: 'flex',
             alignItems: 'center',
             gap: '1rem',
-            fontSize: '0.65rem',
+            fontSize: '0.75rem',
             fontWeight: 800,
             fontFamily: 'var(--font-mono)',
             color: 'var(--text-muted)',

@@ -33,12 +33,12 @@ const CyberAura = () => {
         height: '100%',
         position: 'relative',
         overflow: 'hidden',
-        background: 'radial-gradient(circle at 30% 30%, rgba(17,217,26,0.15), transparent 45%), radial-gradient(circle at 70% 60%, rgba(59,130,246,0.12), transparent 55%), linear-gradient(135deg, #07101f 0%, #040914 100%)'
+        background: 'radial-gradient(circle at 30% 30%, rgba(239,68,68,0.14), transparent 45%), radial-gradient(circle at 70% 60%, rgba(59,130,246,0.14), transparent 55%), linear-gradient(135deg, #07101f 0%, #040914 100%)'
       }}
     >
-      <div className="aura-ring" style={ringStyle(180, '#11D91A')} />
+      <div className="aura-ring" style={ringStyle(180, '#EF4444')} />
       <div className="aura-ring" style={ringStyle(260, '#3B82F6')} />
-      <div className="aura-ring" style={ringStyle(340, '#10B981')} />
+      <div className="aura-ring" style={ringStyle(340, '#EAB308')} />
       <div style={gridStyle} />
       <div style={shieldStyle}>
         <div style={shieldInnerStyle}>OS</div>
@@ -76,17 +76,17 @@ const shieldStyle: React.CSSProperties = {
   height: '130px',
   marginLeft: '-55px',
   marginTop: '-65px',
-  background: 'linear-gradient(180deg, rgba(17,217,26,0.25), rgba(59,130,246,0.2))',
+  background: 'linear-gradient(180deg, rgba(239,68,68,0.24), rgba(59,130,246,0.2))',
   border: '1px solid rgba(255,255,255,0.15)',
   borderRadius: '16px 16px 28px 28px',
-  boxShadow: '0 0 25px rgba(17,217,26,0.35), inset 0 0 20px rgba(59,130,246,0.25)',
+  boxShadow: '0 0 25px rgba(239,68,68,0.28), inset 0 0 20px rgba(59,130,246,0.25)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   letterSpacing: '0.1em',
   fontWeight: 700,
-  color: '#e5fdf0',
-  textShadow: '0 0 8px rgba(17,217,26,0.6)'
+  color: '#eff6ff',
+  textShadow: '0 0 8px rgba(59,130,246,0.55)'
 };
 
 const shieldInnerStyle: React.CSSProperties = {
@@ -191,7 +191,7 @@ export default function LoginPage() {
                   transition: 'border-color 0.2s',
                   borderRadius: '2px'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#11D91A'}
+                onFocus={(e) => e.target.style.borderColor = 'var(--primary)'}
                 onBlur={(e) => e.target.style.borderColor = '#1E293B'}
               />
             </div>
@@ -217,7 +217,7 @@ export default function LoginPage() {
                   transition: 'border-color 0.2s',
                   borderRadius: '2px'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#11D91A'}
+                onFocus={(e) => e.target.style.borderColor = 'var(--primary)'}
                 onBlur={(e) => e.target.style.borderColor = '#1E293B'}
               />
             </div>

@@ -104,13 +104,10 @@ RECOMMENDED ACTIONS:
       }}>
         
         {/* ── FRAMEWORK TABS ── */}
-        <div style={{ 
-          display: 'flex', 
-          gap: '2px', 
+        <div className="horizontal-scroll" style={{ 
           background: 'var(--border)', 
           padding: '2px', 
           borderRadius: '4px',
-          overflowX: 'auto',
           flexShrink: 0
         }}>
           {defaultFrameworks.map(f => (
@@ -118,33 +115,34 @@ RECOMMENDED ACTIONS:
               key={f}
               onClick={() => setActiveTab(f)}
               style={{
-                flex: 1,
-                padding: '0.75rem 1rem',
-                background: activeTab === f ? 'rgba(59, 130, 246, 0.1)' : 'var(--bg-dark-card)',
+                flex: '0 0 auto',
+                padding: '0.75rem 1.25rem',
+                background: activeTab === f ? 'rgba(59, 130, 246, 0.15)' : 'var(--bg-card)',
                 border: 'none',
                 color: activeTab === f ? 'var(--primary)' : 'var(--text-secondary)',
-                fontSize: '0.75rem',
+                fontSize: '0.8rem',
                 fontWeight: 700,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '0.5rem',
-                minWidth: '160px',
+                gap: '0.75rem',
+                minWidth: '180px',
                 transition: 'all 0.2s',
                 borderBottom: activeTab === f ? '2px solid var(--primary)' : '2px solid transparent'
               }}
             >
               {f}
               <span style={{ 
-                fontSize: '0.6rem', 
-                padding: '0.1rem 0.4rem', 
+                fontSize: '0.75rem', 
+                padding: '0.15rem 0.5rem', 
                 borderRadius: '10px', 
-                background: f === 'ISO 27001:2022' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+                background: f === 'ISO 27001:2022' ? 'rgba(59, 130, 246, 0.1)' : 'rgba(239, 68, 68, 0.1)',
                 color: f === 'ISO 27001:2022' ? 'var(--risk-low)' : 'var(--risk-high)',
-                fontWeight: 800
+                fontWeight: 900,
+                fontFamily: 'var(--font-mono)'
               }}>
-                {f === 'ISO 27001:2022' ? 'Compliant' : 'Non-compliant'}
+                {f === 'ISO 27001:2022' ? 'COMPLIANT' : 'AT RISK'}
               </span>
             </button>
           ))}
@@ -153,38 +151,42 @@ RECOMMENDED ACTIONS:
         {/* ── SELECTED FRAMEWORK HEADER ── */}
         <div className="card" style={{ 
           padding: '1.5rem', 
-          background: 'var(--bg-dark-card)', 
+          background: 'var(--bg-card)', 
+          border: '1px solid var(--border)',
           flexShrink: 0,
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          gap: '2rem',
+          flexWrap: 'wrap'
         }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1, minWidth: '300px' }}>
+            <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--text-primary)', margin: 0, lineHeight: 1.2 }}>
               {isNg ? 'Acme Bank - Nigeria - Cyber Security Framework 2026' : 'Bank of Ghana - Cyber & Information Security Directive 2026'}
             </h2>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>{sectorLabel}</span>
+              <span className="text-secondary" style={{ textTransform: 'none' }}>{sectorLabel}</span>
               <span style={{ 
-                padding: '0.2rem 0.5rem', 
+                padding: '0.25rem 0.6rem', 
                 background: 'rgba(239, 68, 68, 0.1)', 
                 color: 'var(--risk-high)', 
                 fontSize: '0.7rem', 
-                fontWeight: 800,
-                borderRadius: '4px'
+                fontWeight: 900,
+                borderRadius: '3px',
+                textTransform: 'uppercase'
               }}>Non-compliant</span>
             </div>
           </div>
           
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
             <div style={{ textAlign: 'right' }}>
-              <h3 style={{ fontSize: '1.75rem', fontWeight: 900, color: 'var(--risk-high)', margin: 0 }}>58%</h3>
-              <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Controls Triggered</p>
-              <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', margin: 0 }}>9 of 20 sections</p>
+              <h3 style={{ fontSize: '2.2rem', fontWeight: 900, color: 'var(--risk-high)', margin: 0, fontFamily: 'var(--font-mono)', lineHeight: 1 }}>58%</h3>
+              <p className="text-secondary" style={{ marginTop: '0.5rem' }}>Controls Triggered</p>
+              <p className="text-secondary" style={{ marginTop: '0.25rem', color: 'var(--text-secondary)' }}>9 of 20 sections</p>
             </div>
             <button 
               className="btn btn-primary" 
-              style={{ padding: '0.6rem 1.25rem', fontSize: '0.8rem' }}
+              style={{ padding: '0.75rem 1.5rem', fontSize: '0.85rem' }}
               onClick={handleDownloadReport}
             >
               Prepare {isNg ? 'Acme' : 'BoG'} Report {'->'}
@@ -193,16 +195,16 @@ RECOMMENDED ACTIONS:
         </div>
 
         {/* ── COMPLIANCE TABLE ── */}
-        <div className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-dark-card)', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ overflowY: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-              <thead style={{ background: 'var(--bg-light)', position: 'sticky', top: 0, zIndex: 10 }}>
-                <tr>
-                  <th style={{ padding: '0.75rem 1.5rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Section</th>
-                  <th style={{ padding: '0.75rem 1.5rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Requirement</th>
-                  <th style={{ padding: '0.75rem 1.5rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Linked Incident</th>
-                  <th style={{ padding: '0.75rem 1.5rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Status</th>
-                  <th style={{ padding: '0.75rem 1.5rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Action</th>
+        <div className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-card)', border: '1px solid var(--border)', flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div className="responsive-table-container">
+            <table style={{ width: '100%', minWidth: '1000px', borderCollapse: 'collapse', textAlign: 'left' }}>
+              <thead>
+                <tr style={{ background: 'var(--surface-hover)', borderBottom: '1px solid var(--border)' }}>
+                  <th className="text-secondary" style={{ padding: '1rem 1.5rem' }}>Section</th>
+                  <th className="text-secondary" style={{ padding: '1rem 1.5rem' }}>Requirement</th>
+                  <th className="text-secondary" style={{ padding: '1rem 1.5rem' }}>Linked Incident</th>
+                  <th className="text-secondary" style={{ padding: '1rem 1.5rem' }}>Status</th>
+                  <th className="text-secondary" style={{ padding: '1rem 1.5rem' }}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -218,8 +220,8 @@ RECOMMENDED ACTIONS:
                         <>
                           <p style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>{row.incident}</p>
                           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginTop: '0.25rem' }}>
-                            <span style={{ fontSize: '0.65rem', padding: '0.1rem 0.3rem', borderRadius: '2px', background: row.severity === 'HIGH' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)', color: row.severity === 'HIGH' ? 'var(--risk-high)' : 'var(--risk-medium)', fontWeight: 800 }}>{row.severity}</span>
-                            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{row.date}</span>
+                            <span style={{ fontSize: '0.75rem', padding: '0.1rem 0.3rem', borderRadius: '2px', background: row.severity === 'HIGH' ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)', color: row.severity === 'HIGH' ? 'var(--risk-high)' : 'var(--risk-medium)', fontWeight: 800 }}>{row.severity}</span>
+                            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{row.date}</span>
                           </div>
                         </>
                       ) : <span style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>-</span>}
@@ -272,7 +274,7 @@ RECOMMENDED ACTIONS:
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '0.5rem' }}>
-          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', margin: 0 }}>Last assessed: 3 Apr 2026, 08:47 WAT</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: 0 }}>Last assessed: 3 Apr 2026, 08:47 WAT</p>
         </div>
 
       </div>

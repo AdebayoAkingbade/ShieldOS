@@ -41,9 +41,9 @@ export default function AssetsPage() {
         {/* ── TYPE GROUPING CARDS ── */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
           {[
-            { type: 'server', label: 'Servers', count: counts.server, color: '#3B82F6' },
-            { type: 'endpoint', label: 'Endpoints', count: counts.endpoint, color: '#10B981' },
-            { type: 'database', label: 'Databases', count: counts.database, color: '#F59E0B' },
+            { type: 'server', label: 'Servers', count: counts.server, color: 'var(--risk-low)' },
+            { type: 'endpoint', label: 'Endpoints', count: counts.endpoint, color: 'var(--primary)' },
+            { type: 'database', label: 'Databases', count: counts.database, color: 'var(--risk-medium)' },
           ].map(group => (
             <div 
               key={group.type}
@@ -98,11 +98,11 @@ export default function AssetsPage() {
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead style={{ background: 'var(--bg-light)', position: 'sticky', top: 0, zIndex: 5 }}>
                 <tr>
-                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Name</th>
-                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>IP Address</th>
-                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Risk</th>
-                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Status</th>
-                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Action</th>
+                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Name</th>
+                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>IP Address</th>
+                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Risk</th>
+                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Status</th>
+                  <th style={{ padding: '0.75rem 1rem', fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase' }}>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -137,7 +137,7 @@ export default function AssetsPage() {
                       </span>
                     </td>
                     <td style={{ padding: '0.75rem 1rem' }}>
-                      <button className="btn btn-outline" style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem' }}>Details</button>
+                      <button className="btn btn-outline" style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem' }}>Details</button>
                     </td>
                   </tr>
                 ))}
@@ -164,15 +164,15 @@ export default function AssetsPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
-                  <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Display Name</p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Display Name</p>
                   <p style={{ fontSize: '0.9rem', fontWeight: 800, margin: 0 }}>{selectedAsset.name}</p>
                 </div>
                 <div>
-                  <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>IP Address</p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>IP Address</p>
                   <p style={{ fontSize: '0.9rem', fontWeight: 700, margin: 0, fontFamily: 'var(--font-mono)' }}>{selectedAsset.ipAddress}</p>
                 </div>
                 <div>
-                  <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Criticality</p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Criticality</p>
                   <p style={{ 
                     fontSize: '0.9rem', 
                     fontWeight: 800, 
@@ -183,17 +183,17 @@ export default function AssetsPage() {
                   </p>
                 </div>
                 <div>
-                  <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Status</p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Status</p>
                   <span className={`status-pill status-pill-${selectedAsset.status === 'compromised' ? 'alert' : 'secure'}`}>
                     {selectedAsset.status}
                   </span>
                 </div>
                 <div>
-                  <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Last Seen</p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Last Seen</p>
                   <p style={{ fontSize: '0.85rem', fontWeight: 600, margin: 0 }}>{new Date(selectedAsset.lastSeen).toLocaleString()}</p>
                 </div>
                 <div>
-                  <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Source Tool</p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.25rem' }}>Source Tool</p>
                   <p style={{ fontSize: '0.85rem', fontWeight: 700, margin: 0, color: 'var(--primary)' }}>LogCenter XDR</p>
                 </div>
               </div>
@@ -213,4 +213,3 @@ export default function AssetsPage() {
     </DashboardLayout>
   );
 }
-

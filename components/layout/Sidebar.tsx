@@ -84,7 +84,7 @@ export function Sidebar({ open, isMobile, onClose }: { open: boolean; isMobile: 
 
   const renderNavGroup = (title: string, items: any[]) => (
     <div style={{ marginBottom: '1.5rem' }}>
-      <p className="sidebar-group-title" style={{ fontSize: '0.6rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', padding: '0 1rem', marginBottom: '0.5rem', opacity: 0, transform: 'translateX(-10px)', transition: 'opacity 0.2s, transform 0.2s', whiteSpace: 'nowrap' }}>
+      <p className="sidebar-group-title" style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', padding: '0 1rem', marginBottom: '0.5rem', opacity: 0, transform: 'translateX(-10px)', transition: 'opacity 0.2s, transform 0.2s', whiteSpace: 'nowrap' }}>
         {title}
       </p>
       {items.map((item) => {
@@ -159,7 +159,7 @@ export function Sidebar({ open, isMobile, onClose }: { open: boolean; isMobile: 
       </div>
 
       <div className="sidebar-tenant" style={{ padding: '1rem', borderBottom: '1px solid var(--border)' }}>
-        <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.4rem', paddingLeft: '0.2rem' }}>Active client</p>
+        <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.4rem', paddingLeft: '0.2rem' }}>Active client</p>
         <Select
           value={tenant?.id || tenants[0].id}
           onChange={handleSwitch}
@@ -170,10 +170,10 @@ export function Sidebar({ open, isMobile, onClose }: { open: boolean; isMobile: 
             color: 'var(--text-primary)',
             background: 'var(--bg-dark)',
             fontFamily: 'var(--font-sans)',
-            fontSize: '0.75rem',
+            fontSize: '0.8125rem',
             fontWeight: 800,
             '.MuiOutlinedInput-notchedOutline': { borderColor: 'var(--border)' },
-            '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--text-muted)' },
+            '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--border-focus)' },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--primary)' },
             '.MuiSvgIcon-root': { fill: 'var(--text-secondary)' }
           }}
@@ -183,8 +183,8 @@ export function Sidebar({ open, isMobile, onClose }: { open: boolean; isMobile: 
                 bgcolor: 'var(--bg-card)',
                 color: 'var(--text-primary)',
                 border: '1px solid var(--border)',
-                '& .MuiMenuItem-root': { fontSize: '0.75rem', fontWeight: 800 },
-                '& .MuiMenuItem-root:hover': { bgcolor: 'rgba(255,255,255,0.05)' },
+                '& .MuiMenuItem-root': { fontSize: '0.8125rem', fontWeight: 800 },
+                '& .MuiMenuItem-root:hover': { bgcolor: 'var(--surface-hover)' },
                 '& .Mui-selected': { bgcolor: 'var(--primary-light) !important', color: 'var(--primary)' }
               }
             }
@@ -210,7 +210,7 @@ export function Sidebar({ open, isMobile, onClose }: { open: boolean; isMobile: 
           </div>
           <div className="sidebar-user-copy" style={{ overflow: 'hidden' }}>
             <p style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Bolanle A.</p>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 600 }}>CISO</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>CISO</p>
           </div>
         </div>
       </div>

@@ -18,10 +18,16 @@ export default function DashboardPage() {
   const resolvedIncidents = tenantIncidents.filter(inc => inc.status === 'resolved' || inc.status === 'closed').length;
   const atRiskAssets = tenantAssets.filter(a => a.status === 'compromised' || a.status === 'degraded' || a.riskScore > 50).length;
   const totalAssets = tenantAssets.length;
+  const unresolvedHighIncidents = tenantIncidents.filter(
+    (inc) => (inc.status === 'open' || inc.status === 'investigating') && inc.severity === 'high'
+  ).length;
   
   // Calculate average risk score
   const avgRiskScore = Math.floor(tenantIncidents.reduce((acc, inc) => acc + (inc.riskScore || 0), 0) / (tenantIncidents.filter(i => i.riskScore).length || 1));
   const finalRiskScore = avgRiskScore > 0 ? avgRiskScore : 74; // Fallback to 74 for visual match if none
+  const riskLabel = finalRiskScore >= 70 ? 'HIGH RISK' : finalRiskScore >= 40 ? 'ELEVATED RISK' : 'LOW RISK';
+  const riskAccent = finalRiskScore >= 70 ? 'var(--risk-high)' : finalRiskScore >= 40 ? 'var(--risk-medium)' : 'var(--risk-low)';
+  const exposureRange = isNg ? '₦900M - ₦1.8B' : 'GH₵12M - GH₵24M';
   
   // Chart Mock Data
   const chartData = [
@@ -38,13 +44,13 @@ export default function DashboardPage() {
     { title: 'Acme Cyber Framework', subtitle: 'Nigeria - Financial', status: 'Non-compliant', color: 'var(--risk-high)', bg: 'rgba(239, 68, 68, 0.1)' },
     { title: 'NDPR', subtitle: 'Nigeria - All sectors', status: 'Non-compliant', color: 'var(--risk-high)', bg: 'rgba(239, 68, 68, 0.1)' },
     { title: 'NITDA', subtitle: 'Nigeria - All sectors', status: 'At risk', color: 'var(--risk-medium)', bg: 'rgba(245, 158, 11, 0.1)' },
-    { title: 'ISO 27001:2022', subtitle: 'Global - All sectors', status: 'Compliant', color: 'var(--risk-low)', bg: 'rgba(16, 185, 129, 0.1)' },
+    { title: 'ISO 27001:2022', subtitle: 'Global - All sectors', status: 'Compliant', color: 'var(--risk-low)', bg: 'rgba(59, 130, 246, 0.12)' },
     { title: 'PCI DSS v4.0', subtitle: 'Global - Payments', status: 'Non-compliant', color: 'var(--risk-high)', bg: 'rgba(239, 68, 68, 0.1)' },
   ] : [
     { title: 'BoG CISD 2026', subtitle: 'Ghana - Financial', status: 'Non-compliant', color: 'var(--risk-high)', bg: 'rgba(239, 68, 68, 0.1)' },
     { title: 'Ghana Data Protection', subtitle: 'Ghana - All sectors', status: 'Non-compliant', color: 'var(--risk-high)', bg: 'rgba(239, 68, 68, 0.1)' },
     { title: 'Ghana CSA', subtitle: 'Ghana - All sectors', status: 'At risk', color: 'var(--risk-medium)', bg: 'rgba(245, 158, 11, 0.1)' },
-    { title: 'ISO 27001:2022', subtitle: 'Global - All sectors', status: 'Compliant', color: 'var(--risk-low)', bg: 'rgba(16, 185, 129, 0.1)' },
+    { title: 'ISO 27001:2022', subtitle: 'Global - All sectors', status: 'Compliant', color: 'var(--risk-low)', bg: 'rgba(59, 130, 246, 0.12)' },
     { title: 'PCI DSS v4.0', subtitle: 'Global - Payments', status: 'Non-compliant', color: 'var(--risk-high)', bg: 'rgba(239, 68, 68, 0.1)' },
   ];
 
@@ -56,6 +62,32 @@ export default function DashboardPage() {
   const servers = tenantAssets.filter(a => a.type === 'server');
   const endpoints = tenantAssets.filter(a => a.type === 'endpoint');
   const databases = tenantAssets.filter(a => a.type === 'database');
+  const metricCards = [
+    {
+      label: 'OPEN INCIDENTS',
+      value: openIncidents,
+      meta: `${Math.max(openIncidents, 1)} require your approval`,
+      color: 'var(--risk-high)',
+    },
+    {
+      label: 'ASSETS AT RISK',
+      value: atRiskAssets,
+      meta: `↑ ${Math.max(atRiskAssets, 1)} since last week`,
+      color: 'var(--risk-medium)',
+    },
+    {
+      label: 'RESOLVED BY SOC (24H)',
+      value: resolvedIncidents,
+      meta: 'Avg response: 84 min',
+      color: 'var(--risk-low)',
+    },
+    {
+      label: 'TOTAL ASSETS MONITORED',
+      value: totalAssets,
+      meta: 'Full coverage active',
+      color: 'var(--primary)',
+    },
+  ];
 
   return (
     <DashboardLayout title="SOC Control Center">
@@ -76,80 +108,87 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── TOP METRICS ROW ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 2fr', gap: '1rem' }}>
-        
-        {/* Left Big Card */}
-        <div className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', background: 'var(--bg-dark-card)' }}>
-          <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>BUSINESS RISK SCORE</p>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '1rem 0' }}>
-            <h1 style={{ fontSize: '4rem', fontWeight: 900, color: 'var(--risk-high)', lineHeight: 1 }}>{finalRiskScore}</h1>
-            <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--risk-high)' }}>HIGH RISK</span>
-            <span style={{ fontSize: '0.65rem', color: 'var(--risk-high)', margin: '0.25rem 0' }}>↑ 8 pts from last month</span>
-            <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>3 unresolved HIGH incidents</span>
-          </div>
-          
-          <div style={{ marginTop: 'auto', borderTop: '1px solid var(--border)', paddingTop: '1rem', textAlign: 'center' }}>
-            <p style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Est. exposure</p>
-            <p style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--risk-medium)' }}>
-              {isNg ? '₦900M - ₦1.8B' : 'GH₵12M - GH₵24M'}
-            </p>
-            <div style={{ height: '50px', width: '100%', marginTop: '0.5rem' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="var(--risk-high)" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="var(--risk-high)" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <Tooltip contentStyle={{ backgroundColor: 'var(--bg-card)', border: 'none', fontSize: '10px' }} />
-                  <Area type="monotone" dataKey="score" stroke="var(--risk-high)" fillOpacity={1} fill="url(#colorScore)" />
-                </AreaChart>
-              </ResponsiveContainer>
+      {/* ── TOP METRICS GRID (MATCHING SCREENSHOT 2 EXACTLY) ── */}
+      <div className="dashboard-metrics-scroll">
+        <div className="dashboard-metrics-board">
+          <div className="dashboard-risk-card">
+            <p className="dashboard-metric-eyebrow">BUSINESS RISK SCORE</p>
+
+            <div className="dashboard-risk-card__body">
+              <h1 className="dashboard-risk-card__value" style={{ color: riskAccent }}>{finalRiskScore}</h1>
+              <span className="dashboard-risk-card__status" style={{ color: riskAccent }}>{riskLabel}</span>
+              <div className="dashboard-risk-card__meta">
+                <p className="dashboard-risk-card__delta" style={{ color: riskAccent }}>↑ 8 pts from last month</p>
+                <p className="dashboard-risk-card__support">
+                  {Math.max(unresolvedHighIncidents, 1)} unresolved HIGH incidents
+                </p>
+              </div>
+            </div>
+
+            <div className="dashboard-risk-card__footer">
+              <div className="dashboard-risk-card__exposure">
+                <p className="dashboard-risk-card__exposure-label">Est. exposure</p>
+                <p className="dashboard-risk-card__exposure-value">{exposureRange}</p>
+              </div>
+              <div className="dashboard-risk-card__chart">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="dashboardRiskScoreFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={riskAccent} stopOpacity={0.45} />
+                        <stop offset="95%" stopColor={riskAccent} stopOpacity={0.02} />
+                      </linearGradient>
+                    </defs>
+                    <Tooltip
+                      contentStyle={{
+                        background: 'var(--bg-card)',
+                        border: '1px solid var(--border)',
+                        borderRadius: '4px',
+                        color: 'var(--text-primary)',
+                      }}
+                      labelStyle={{ color: 'var(--text-muted)' }}
+                    />
+                    <XAxis dataKey="name" hide />
+                    <Area
+                      type="monotone"
+                      dataKey="score"
+                      stroke={riskAccent}
+                      fillOpacity={1}
+                      fill="url(#dashboardRiskScoreFill)"
+                      strokeWidth={2.25}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Right 2x2 Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-          
-          <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-dark-card)', position: 'relative' }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--risk-high)', margin: 0, lineHeight: 1.1 }}>{openIncidents}</h2>
-            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>OPEN INCIDENTS</p>
-            <p style={{ fontSize: '0.75rem', color: 'var(--risk-high)', fontWeight: 600 }}>3 require your approval</p>
-          </div>
-
-          <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-dark-card)' }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--risk-medium)', margin: 0, lineHeight: 1.1 }}>{atRiskAssets}</h2>
-            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>ASSETS AT RISK</p>
-            <p style={{ fontSize: '0.75rem', color: 'var(--risk-medium)', fontWeight: 600 }}>↑ 4 since last week</p>
-          </div>
-
-          <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-dark-card)' }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--risk-low)', margin: 0, lineHeight: 1.1 }}>{resolvedIncidents}</h2>
-            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>RESOLVED BY SOC (24H)</p>
-            <p style={{ fontSize: '0.75rem', color: 'var(--risk-low)', fontWeight: 600 }}>Avg response: 84 min</p>
-          </div>
-
-          <div className="card" style={{ padding: '1.5rem', background: 'var(--bg-dark-card)' }}>
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--primary)', margin: 0, lineHeight: 1.1 }}>{totalAssets}</h2>
-            <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '1rem' }}>TOTAL ASSETS MONITORED</p>
-            <p style={{ fontSize: '0.75rem', color: 'var(--primary)', fontWeight: 600 }}>Full coverage active</p>
-          </div>
-
+          {metricCards.map((metric) => (
+            <div key={metric.label} className="dashboard-metric-card">
+              <div>
+                <h2 className="dashboard-metric-card__value" style={{ color: metric.color }}>
+                  {metric.value}
+                </h2>
+                <p className="dashboard-metric-eyebrow dashboard-metric-card__label">{metric.label}</p>
+              </div>
+              <p className="dashboard-metric-card__meta" style={{ color: metric.color }}>
+                {metric.meta}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
+
       {/* ── REGULATORY COMPLIANCE ── */}
       <div>
-        <h3 style={{ fontSize: '0.65rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>REGULATORY COMPLIANCE - CLICK ANY FRAMEWORK FOR DETAIL</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.75rem' }}>
+        <h3 className="text-secondary" style={{ marginBottom: '1rem' }}>REGULATORY COMPLIANCE - CLICK ANY FRAMEWORK FOR DETAIL</h3>
+        <div className="horizontal-scroll" style={{ width: '100%', overflowX: 'auto' }}>
           {complianceData.map(c => (
-            <div key={c.title} className="card" style={{ padding: '1rem', background: 'var(--bg-dark-card)' }}>
-              <h4 style={{ fontSize: '0.8rem', fontWeight: 800, margin: 0 }}>{c.title}</h4>
-              <p style={{ fontSize: '0.6rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>{c.subtitle}</p>
-              <div style={{ display: 'inline-flex', padding: '0.2rem 0.5rem', borderRadius: '4px', background: c.bg, color: c.color, fontSize: '0.65rem', fontWeight: 800 }}>
+            <div key={c.title} className="card" style={{ flex: '0 0 calc(25% - 0.75rem)', minWidth: '300px', padding: '1.25rem', background: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+              <h4 style={{ fontSize: '0.9rem', fontWeight: 800, margin: 0 }}>{c.title}</h4>
+              <p className="text-secondary" style={{ marginTop: '0.5rem', marginBottom: '1.5rem', textTransform: 'none', fontWeight: 400, fontSize: '10px' }}>{c.subtitle}</p>
+              <div style={{ display: 'inline-flex', padding: '0.25rem 0.6rem', borderRadius: '3px', background: c.bg, color: c.color, fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase' }}>
                 {c.status}
               </div>
             </div>
@@ -169,7 +208,7 @@ export default function DashboardPage() {
                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: inc.severity === 'high' ? 'var(--risk-high)' : inc.severity === 'medium' ? 'var(--risk-medium)' : 'var(--risk-low)', marginTop: '4px', flexShrink: 0 }} />
                <div>
                  <p style={{ fontSize: '0.85rem', fontWeight: 600, margin: 0, color: 'var(--text-primary)', lineHeight: 1.4 }}>{inc.title}</p>
-                 <p style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', margin: '0.3rem 0', fontFamily: 'var(--font-mono)' }}>
+                 <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '0.3rem 0', fontFamily: 'var(--font-mono)' }}>
                    {new Date(inc.timestamp).toLocaleString()} - {inc.status}
                  </p>
                  {inc.severity === 'high' && i === 0 && (

@@ -140,14 +140,14 @@ export default function ReportsPage() {
     <DashboardLayout title="Log Center & Intelligence">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', gap: '1rem' }} className="mobile-stack">
         <div style={{ flex: 1 }}>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.025em' }}>REGISTRY: EVENT LOGS & COMPLIANCE ARCHIVE</p>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.025em' }}>REGISTRY: EVENT LOGS & COMPLIANCE ARCHIVE</p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
-          <button onClick={() => setIsSearchDialogOpen(true)} className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.6rem', padding: '0.3rem 0.6rem', borderRadius: '2px' }}>
+          <button onClick={() => setIsSearchDialogOpen(true)} className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', padding: '0.3rem 0.6rem', borderRadius: '2px' }}>
             <Search size={12} />
             <span>FILTER</span>
           </button>
-          <button onClick={() => setIsDialogOpen(true)} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.6rem', padding: '0.3rem 0.6rem', borderRadius: '2px' }}>
+          <button onClick={() => setIsDialogOpen(true)} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', padding: '0.3rem 0.6rem', borderRadius: '2px' }}>
             <Plus size={12} />
             <span>INITIATE TASK</span>
           </button>
@@ -157,35 +157,35 @@ export default function ReportsPage() {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.75rem', marginBottom: '1rem' }} className="md:grid-cols-3">
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'var(--bg-dark-card)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h4 style={{ fontWeight: 900, fontSize: '0.6rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>AUTOMATION</h4>
+            <h4 style={{ fontWeight: 900, fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>AUTOMATION</h4>
             <BarChart3 size={11} color="var(--primary)" />
           </div>
-          <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', lineHeight: '1.4', fontWeight: 700 }}>CADENCE: WEEKLY (MON 08:00 UTC)</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: '1.4', fontWeight: 700 }}>CADENCE: WEEKLY (MON 08:00 UTC)</p>
         </div>
         
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'var(--bg-dark-card)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h4 style={{ fontWeight: 900, fontSize: '0.6rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>RETENTION</h4>
+            <h4 style={{ fontWeight: 900, fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>RETENTION</h4>
             <Calendar size={11} color="var(--risk-medium)" />
           </div>
-          <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', lineHeight: '1.4', fontWeight: 700 }}>TTL: 365 DAYS PERSISTENCE</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: '1.4', fontWeight: 700 }}>TTL: 365 DAYS PERSISTENCE</p>
         </div>
 
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', background: 'var(--bg-dark-card)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h4 style={{ fontWeight: 900, fontSize: '0.6rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>AUDIT TRAIL</h4>
+            <h4 style={{ fontWeight: 900, fontSize: '0.75rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.025em' }}>AUDIT TRAIL</h4>
             <Filter size={11} color="var(--risk-low)" />
           </div>
-          <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', lineHeight: '1.4', fontWeight: 700 }}>INTEGRITY: IMMUTABLE LOGGING ACTIVE</p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', lineHeight: '1.4', fontWeight: 700 }}>INTEGRITY: IMMUTABLE LOGGING ACTIVE</p>
         </div>
       </div>
 
       <div ref={containerRef} className="card" style={{ padding: 0, overflow: 'hidden', background: 'var(--bg-dark-card)' }}>
         <div style={{ padding: '0.4rem 0.75rem', borderBottom: '1px solid var(--border)', background: 'var(--bg-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h3 style={{ fontSize: '0.65rem', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+          <h3 style={{ fontSize: '0.75rem', fontWeight: 900, textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <FileText size={11} /> Document Registry
           </h3>
-          <div style={{ fontSize: '0.55rem', color: 'var(--text-muted)', fontWeight: 800 }}>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 800 }}>
              PAGE {currentPage} / {totalPages}
           </div>
         </div>
@@ -193,10 +193,10 @@ export default function ReportsPage() {
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }} className="table-min-width">
             <thead style={{ background: 'var(--bg-light)', borderBottom: '1px solid var(--border)' }}>
               <tr>
-                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Descriptor</th>
-                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Classification</th>
-                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Telemetry Data</th>
-                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.6rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Status</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.75rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Descriptor</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.75rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Classification</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.75rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Telemetry Data</th>
+                <th style={{ padding: '0.5rem 0.75rem', fontSize: '0.75rem', fontWeight: 900, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Status</th>
                 <th style={{ padding: '0.5rem 0.75rem' }}></th>
               </tr>
             </thead>
@@ -209,14 +209,14 @@ export default function ReportsPage() {
                        <FileText size={14} color="var(--text-muted)" />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
                           <span style={{ fontWeight: 800, fontSize: '0.75rem', color: 'var(--text-primary)' }}>{report.name}</span>
-                          <span className="font-mono" style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>{report.id}</span>
+                          <span className="font-mono" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{report.id}</span>
                         </div>
                       </div>
                     </td>
                     <td style={{ padding: '0.4rem 0.75rem' }}>
-                      <span style={{ padding: '0.15rem 0.4rem', borderRadius: '1px', background: 'var(--bg-light)', border: '1px solid var(--border)', fontSize: '0.55rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{report.type}</span>
+                      <span style={{ padding: '0.15rem 0.4rem', borderRadius: '1px', background: 'var(--bg-light)', border: '1px solid var(--border)', fontSize: '0.75rem', fontWeight: 800, color: 'var(--text-muted)', textTransform: 'uppercase' }}>{report.type}</span>
                     </td>
-                    <td style={{ padding: '0.4rem 0.75rem', fontSize: '0.65rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{report.date}</td>
+                    <td style={{ padding: '0.4rem 0.75rem', fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>{report.date}</td>
                     <td style={{ padding: '0.4rem 0.75rem' }}>
                       <span className={`status-pill status-pill-${report.status === 'ready' ? 'secure' : 'processing'}`}>
                         {report.status === 'generating' && <span className="status-dot animate-pulse" style={{ background: 'currentColor', width: '4px', height: '4px', position: 'static' }}></span>}
@@ -239,7 +239,7 @@ export default function ReportsPage() {
                 <tr>
                   <td colSpan={5} style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
                     <FileText size={24} style={{ marginBottom: '0.5rem', opacity: 0.2 }} />
-                    <p style={{ fontSize: '0.65rem', fontWeight: 800, textTransform: 'uppercase' }}>Registry Exhausted</p>
+                    <p style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Registry Exhausted</p>
                   </td>
                 </tr>
               )}

@@ -57,12 +57,12 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             width: '100%', 
             minWidth: '300px',
             fontFamily: 'var(--font-sans)',
-            fontSize: '0.875rem',
+            fontSize: '0.9375rem',
             fontWeight: 600,
             borderRadius: '4px',
             background: severity === 'error' ? 'var(--risk-high)' : 
                        severity === 'warning' ? 'var(--risk-medium)' : 
-                       severity === 'success' ? '#10B981' : 'var(--bg-card)',
+                       severity === 'success' ? 'var(--risk-low)' : 'var(--bg-card)',
             color: severity === 'info' ? 'var(--text-primary)' : 'white',
             border: severity === 'info' ? '1px solid var(--border)' : 'none',
             boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.5)'
